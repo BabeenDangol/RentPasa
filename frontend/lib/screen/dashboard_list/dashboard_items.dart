@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loginuicolors/screen/dashboard_list/roomdetailpage.dart';
 // import 'package:khalti_flutter/khalti_flutter.dart';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../models/post_data.dart';
 
 class DashboardItem extends StatelessWidget {
@@ -29,7 +29,7 @@ class DashboardItem extends StatelessWidget {
               tag: post.imagePath, // Unique tag for each room
               child: Container(
                 width: 250,
-                height: 250,
+                height: 400,
                 margin: const EdgeInsets.fromLTRB(0, 15, 5, 20),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -95,6 +95,23 @@ class DashboardItem extends StatelessWidget {
                                   Icon(Icons.money),
                                   Text(" Rs ${post.amount}"),
                                 ],
+                              ),
+                              RatingBar.builder(
+                                itemSize: 20,
+                                initialRating: 3,
+                                minRating: 1,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                onRatingUpdate: (rating) {
+                                  print(rating);
+                                },
                               ),
                             ],
                           ),

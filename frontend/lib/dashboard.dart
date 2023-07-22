@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:loginuicolors/colors/app_theme.dart';
 import 'package:loginuicolors/screen/Tenantpages/profile.dart';
 import 'package:loginuicolors/screen/Tenantpages/postlisting.dart';
 import 'package:loginuicolors/screen/Tenantpages/search.dart';
 import 'package:loginuicolors/screen/Tenantpages/setting.dart';
 import 'package:loginuicolors/screen/Tenantpages/tenant_view.dart';
-import 'package:loginuicolors/utils/route_names.dart';
+// import 'package:loginuicolors/utils/route_names.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'colors/colors.dart';
 import 'login.dart';
@@ -150,7 +151,7 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: AppTheme.colors.prRed,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -170,10 +171,10 @@ class _DashboardState extends State<Dashboard> {
       ),
       body: _buildScreens()[_currentIndex],
       bottomNavigationBar: Container(
-        height: 80,
+        height: 100,
         child: BottomNavigationBar(
-          backgroundColor: Color.fromARGB(255, 103, 129, 124),
-          selectedItemColor: tdpurple3,
+          backgroundColor: AppTheme.colors.srRed,
+          selectedItemColor: AppTheme.colors.prRed,
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (int index) {
