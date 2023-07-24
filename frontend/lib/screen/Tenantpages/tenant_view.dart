@@ -5,7 +5,18 @@ import '../../models/post_data.dart';
 import '../Provider/propertyList.dart';
 import '../dashboard_list/booking_list.dart';
 import '../dashboard_list/dashboard_list.dart';
+<<<<<<< HEAD
 import 'package:provider/provider.dart';
+=======
+import 'package:carousel_slider/carousel_slider.dart';
+
+List<String> imageList = [
+  'assets/exide-ad.jpg',
+  'assets/gulab-ad.jpg',
+  'assets/nimb-ad.jpg',
+  // Add more image paths here
+];
+>>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
 
 class TenantViewPage extends StatefulWidget {
   final Booking? booking;
@@ -16,7 +27,7 @@ class TenantViewPage extends StatefulWidget {
 }
 
 class _TenantViewPageState extends State<TenantViewPage> {
-  final List<Post> imageList = [
+  final List<Post> postList = [
     Post(
       'assets/modern.jpg',
       'Kathmandu',
@@ -44,9 +55,15 @@ class _TenantViewPageState extends State<TenantViewPage> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return Consumer<PropertyListProvider>(
       builder: (context, provider, child) => Scaffold(
         body: SingleChildScrollView(
+=======
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Expanded(
+>>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -130,6 +147,7 @@ class _TenantViewPageState extends State<TenantViewPage> {
               const SizedBox(
                 height: 5,
               ),
+<<<<<<< HEAD
               Dashboardlist(posts: imageList),
               SizedBox(
                 height: 25,
@@ -138,6 +156,38 @@ class _TenantViewPageState extends State<TenantViewPage> {
               SizedBox(
                 height: 25,
               )
+=======
+              Dashboardlist(posts: postList),
+
+              // IconRow(),
+              // SizedBox(
+              //   height: 25,
+              // ),
+              SizedBox(
+                  height: 200,
+                  child: CarouselSlider(
+                    items: imageList.map((imagePath) {
+                      return Container(
+                          // Set the desired fixed width
+                          child: ClipRRect(
+                        child: Image.asset(
+                          imagePath,
+                          width: 400,
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ));
+                    }).toList(),
+                    options: CarouselOptions(
+                      autoPlay: true,
+                      aspectRatio: 22 / 8,
+                      enlargeCenterPage: true,
+                      autoPlayInterval: Duration(seconds: 6),
+                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                    ),
+                  )),
+>>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
             ],
           ),
         ),

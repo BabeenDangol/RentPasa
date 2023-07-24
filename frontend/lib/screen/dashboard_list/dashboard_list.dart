@@ -10,13 +10,13 @@ class Dashboardlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 400,
       child: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemCount: 3,
         itemBuilder: (context, index) => Container(
-          height: 300,
+          height: 200,
           child: DashboardItem(
             post: posts[index],
           ),
