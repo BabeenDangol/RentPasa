@@ -39,8 +39,12 @@ dependencies:
   image_picker: ^1.0.0
   flutter_typeahead: ^4.6.2
   khalti_flutter: ^2.2.1
+<<<<<<< HEAD
+  provider: ^6.0.5
+=======
   carousel_slider: ^4.2.1
   flutter_rating_bar: ^4.0.1
+>>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
 
 dev_dependencies:
   flutter_test:

@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:loginuicolors/utils/route_names.dart';
 
 import '../../models/post_data.dart';
+import '../Provider/propertyList.dart';
+import '../dashboard_list/booking_list.dart';
 import '../dashboard_list/dashboard_list.dart';
+<<<<<<< HEAD
+import 'package:provider/provider.dart';
+=======
 import 'package:carousel_slider/carousel_slider.dart';
 
 List<String> imageList = [
@@ -11,9 +16,11 @@ List<String> imageList = [
   'assets/nimb-ad.jpg',
   // Add more image paths here
 ];
+>>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
 
 class TenantViewPage extends StatefulWidget {
-  const TenantViewPage({Key? key}) : super(key: key);
+  final Booking? booking;
+  const TenantViewPage({Key? key, this.booking}) : super(key: key);
 
   @override
   State<TenantViewPage> createState() => _TenantViewPageState();
@@ -40,12 +47,23 @@ class _TenantViewPageState extends State<TenantViewPage> {
       'Kathmandu,Kritipur',
     ),
   ];
+  @override
+  void initState() {
+    super.initState();
+    print(widget.booking);
+  }
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
+    return Consumer<PropertyListProvider>(
+      builder: (context, provider, child) => Scaffold(
+        body: SingleChildScrollView(
+=======
     return Scaffold(
       body: SingleChildScrollView(
         child: Expanded(
+>>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -129,6 +147,16 @@ class _TenantViewPageState extends State<TenantViewPage> {
               const SizedBox(
                 height: 5,
               ),
+<<<<<<< HEAD
+              Dashboardlist(posts: imageList),
+              SizedBox(
+                height: 25,
+              ),
+              IconRow(),
+              SizedBox(
+                height: 25,
+              )
+=======
               Dashboardlist(posts: postList),
 
               // IconRow(),
@@ -159,6 +187,7 @@ class _TenantViewPageState extends State<TenantViewPage> {
                       autoPlayCurve: Curves.fastOutSlowIn,
                     ),
                   )),
+>>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
             ],
           ),
         ),

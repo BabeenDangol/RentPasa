@@ -3,12 +3,12 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:loginuicolors/screen/Tenantpages/postlisting.dart';
-
+import 'package:loginuicolors/screen/dashboard_list/property_list_model.dart';
 import '../../config.dart';
 import '../dashboard_list/booking_list.dart';
 
 class BookingPage extends StatefulWidget {
-  final Booking booking;
+  final PropertyList booking;
   final String? names;
   final String? email;
   final int? phone;
@@ -166,7 +166,7 @@ class _BookingPageState extends State<BookingPage> {
                           SizedBox(
                             height: 20,
                           ),
-                          Text("${widget.booking.propertyId}"),
+                          Text("${widget.booking.id}"),
                         ],
                       )
                     ],
@@ -223,6 +223,7 @@ class _BookingPageState extends State<BookingPage> {
       'propertyBalconyCount': widget.booking.propertyBalconyCount,
       'propertyBedroomCount': widget.booking.propertyBedroomCount,
       'propertyDate': widget.booking.propertyDate.toString(),
+      'bookingRemaining': widget.booking.bookingRemaining.toString(),
     };
 
     final response = await http.post(
@@ -245,12 +246,7 @@ class _BookingPageState extends State<BookingPage> {
           ),
         );
         // Redirect to ShowPropertyPage after successful booking
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => GetDataPage(),
-          ),
-        );
+        Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
