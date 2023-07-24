@@ -3,10 +3,11 @@ const bcrypt = require("bcrypt");
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   names: {
     type: String,
     required: true,
+    trim: true,
   },
   phone: {
     type: Number,
@@ -18,6 +19,7 @@ const userSchema = new Schema({
     lowercase: true,
     required: true,
     unique: true,
+    trim: true
   },
   password: {
     type: String,
@@ -31,7 +33,7 @@ const userSchema = new Schema({
 
 userSchema.pre('save', async function(){
   try {
-    var user = this;
+    let user = this;
     const salt = await (bcrypt.genSalt(10));
     const hashpass = await bcrypt.hash(user.password,salt);
     user.password = hashpass;
