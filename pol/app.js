@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRouter = require('./routers/user.router');
+const bookRouter = require('./routers/book.router');
 const bookingsRouter = require('./routers/bookings.router');
+const propertyRouter = require('./routers/property.router');
 const cors = require('cors');
 const { url } = require('inspector');
 

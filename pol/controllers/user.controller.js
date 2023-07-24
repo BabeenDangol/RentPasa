@@ -31,6 +31,7 @@ exports.login = async (req, res, next) => {
 
         const token = await UserService.generateToken(tokenData, "secretKey", '1h');
 
+        res.headers = {};
         res.headers.authorization = token;
 
         res.status(200).json({ status: true, token: token });
