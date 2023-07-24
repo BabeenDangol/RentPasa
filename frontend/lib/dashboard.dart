@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-<<<<<<< HEAD
+
 import 'package:loginuicolors/screen/Tenantpages/listing2.dart';
 import 'package:loginuicolors/screen/Tenantpages/mybookingpage.dart';
-=======
+
 import 'package:loginuicolors/colors/app_theme.dart';
->>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
+
 import 'package:loginuicolors/screen/Tenantpages/profile.dart';
 import 'package:loginuicolors/screen/Tenantpages/postlisting.dart';
 import 'package:loginuicolors/screen/Tenantpages/search.dart';
 import 'package:loginuicolors/screen/Tenantpages/setting.dart';
 import 'package:loginuicolors/screen/Tenantpages/tenant_view.dart';
-<<<<<<< HEAD
+
 import 'package:loginuicolors/screen/ownerpage/ownerwiew.dart';
 import 'package:loginuicolors/utils/route_names.dart';
-=======
+
 // import 'package:loginuicolors/utils/route_names.dart';
->>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'colors/colors.dart';
 import 'login.dart';
@@ -139,20 +139,13 @@ class _DashboardState extends State<Dashboard> {
     List<Widget> _buildScreens() {
       return [
         TenantViewPage(),
-        // MyBooking(),
-        ListData(),
         PostListing(
           email: email,
           names: names,
           phone: phone,
           id: id,
         ),
-        // GetDataPage(
-        //   email: email,
-        //   names: names,
-        //   phone: phone,
-        //   id: id,
-        // ),
+        MyBooking(),
         ProfilePage(
           email: email,
           names: names,
@@ -165,12 +158,9 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       appBar: AppBar(
-<<<<<<< HEAD
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.teal,
-=======
-        backgroundColor: AppTheme.colors.prRed,
->>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
+        // backgroundColor: Colors.teal,
+        backgroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -206,17 +196,13 @@ class _DashboardState extends State<Dashboard> {
               icon: Icon(Icons.home_outlined),
               label: "Home",
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.room),
-            //   label: "My Booking ",
-            // ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.room),
-              label: "List Data ",
-            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.add_outlined),
               label: "Post Listing",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.room),
+              label: "Bookings",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
@@ -274,7 +260,7 @@ class _DashboardState extends State<Dashboard> {
         height: 80,
         child: BottomNavigationBar(
           backgroundColor: Color.fromARGB(255, 103, 129, 124),
-          selectedItemColor: tdpurple3,
+          selectedItemColor: Colors.purple,
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (int index) {

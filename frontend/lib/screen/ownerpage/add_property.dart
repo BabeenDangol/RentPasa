@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../Provider/propertyList.dart';
 // import 'booking.dart';
 // import 'dashboard.dart';
 
@@ -27,7 +30,7 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
   String _selectedPropertyType = 'home';
   int _selectedBalcony = 1;
   int _selectedBedroom = 1;
-
+  @override
   void _presentDatePicker() {
     showDatePicker(
       context: context,
@@ -117,6 +120,12 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
 
       if (jsonResponse['status']) {
         // String names  = jsonResponse['names'];
+        try {
+          await Provider.of<PropertyListProvider>(context, listen: false)
+              .refreshData();
+        } catch (e) {
+          throw (e);
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Property successfully added'),

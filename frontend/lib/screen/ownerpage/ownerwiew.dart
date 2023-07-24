@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bounce/flutter_bounce.dart';
+import 'package:loginuicolors/screen/ownerpage/myproperty.dart';
 
 import '../../add_property_form.dart';
 import 'add_property.dart';
@@ -61,16 +63,22 @@ class _OwnerViewPageState extends State<OwnerViewPage> {
                     onPressed: _openAddProperty,
                   ),
                   GridCard(
-                      icons: Icon(Icons.add_a_photo_outlined),
-                      text: Text(
-                        "My Propery",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    icons: Icon(Icons.add_a_photo_outlined),
+                    text: Text(
+                      "My Propery",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-                      color: const Color.fromARGB(255, 247, 247, 247),
-                      onPressed: () => navigateToPage(context, '/page2')),
+                    ),
+                    color: const Color.fromARGB(255, 247, 247, 247),
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyProperty(),
+                        )),
+                  ),
+
                   GridCard(
                       icons: Icon(Icons.add_a_photo_outlined),
                       text: Text(
@@ -108,8 +116,9 @@ class GridCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: onPressed,
+      child: Bounce(
+        duration: Duration(milliseconds: 25),
+        onPressed: onPressed,
         child: Container(
           decoration: BoxDecoration(
             boxShadow: [

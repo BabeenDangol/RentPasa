@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -6,16 +7,14 @@ import 'package:loginuicolors/config.dart';
 import 'package:loginuicolors/screen/dashboard_list/property_list_model.dart';
 import '../dashboard_list/booking_list.dart';
 
-import 'bookingpage.dart';
-
-class MyBooking extends StatefulWidget {
-  const MyBooking({Key? key}) : super(key: key);
+class BookedProperty extends StatefulWidget {
+  const BookedProperty({Key? key}) : super(key: key);
 
   @override
-  State<MyBooking> createState() => _MyBookingState();
+  State<BookedProperty> createState() => _BookedPropertyState();
 }
 
-class _MyBookingState extends State<MyBooking> {
+class _BookedPropertyState extends State<BookedProperty> {
   List<Booking> bookings = [];
   bool isLoading = true;
   TextEditingController searchController = TextEditingController();
@@ -73,6 +72,7 @@ class _MyBookingState extends State<MyBooking> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(),

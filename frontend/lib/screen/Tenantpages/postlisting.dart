@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 // Your existing ListData widget code remains unchanged
 
-class PostListing extends StatelessWidget {
+class PostListing extends StatefulWidget {
   final String email;
   final String names;
   final int? phone;
@@ -18,6 +18,21 @@ class PostListing extends StatelessWidget {
       this.phone,
       required this.id})
       : super(key: key);
+
+  @override
+  State<PostListing> createState() => _PostListingState();
+}
+
+class _PostListingState extends State<PostListing> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<PropertyListProvider>(context, listen: false)
+          .filteredPropertyList;
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +107,7 @@ class PostListing extends StatelessWidget {
                                                   builder: (context) =>
                                                       BookingPage(
                                                     booking: property,
-                                                    id: id,
+                                                    id: widget.id,
                                                   ),
                                                 ),
                                               );

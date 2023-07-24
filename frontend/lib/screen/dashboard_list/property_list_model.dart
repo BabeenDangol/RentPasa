@@ -53,7 +53,7 @@ class PropertyList {
   });
 
   factory PropertyList.fromJson(Map<String, dynamic> json) => PropertyList(
-        bookingRemaining: json["bookingRemaining"],
+        bookingRemaining: json["bookingRemaining"] ?? 0,
         id: json["_id"],
         propertyAddress: json["propertyAddress"],
         propertyLocality: json["propertyLocality"],
