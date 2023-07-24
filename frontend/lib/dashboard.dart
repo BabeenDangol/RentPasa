@@ -180,10 +180,10 @@ class _DashboardState extends State<Dashboard> {
       ),
       body: _buildScreens()[_currentIndex],
       bottomNavigationBar: Container(
-        height: 100,
+        height: 95,
         child: BottomNavigationBar(
-          backgroundColor: AppTheme.colors.srRed,
-          selectedItemColor: AppTheme.colors.prRed,
+          backgroundColor: Color(0xFF764A9C),
+          selectedItemColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (int index) {
@@ -231,7 +231,11 @@ class _DashboardState extends State<Dashboard> {
     ];
     //Dashboard List
     List<Widget> _buildScreens() {
-      return [OwnerViewPage()];
+      return [
+        OwnerViewPage(
+          names: names,
+        )
+      ];
     }
 
     return Scaffold(
@@ -321,7 +325,10 @@ class _DashboardState extends State<Dashboard> {
         );
         return;
       },
-      child: Icon(Icons.logout, size: 30),
+      child: Icon(
+        Icons.logout,
+        size: 30,
+      ),
     );
   }
 

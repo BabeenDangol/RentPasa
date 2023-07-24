@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:loginuicolors/screen/ownerpage/myproperty.dart';
-
 import '../../add_property_form.dart';
 import 'add_property.dart';
 
 class OwnerViewPage extends StatefulWidget {
+  final String names;
+
+  const OwnerViewPage({Key? key, required this.names}) : super(key: key);
   @override
   State<OwnerViewPage> createState() => _OwnerViewPageState();
 }
@@ -75,7 +77,9 @@ class _OwnerViewPageState extends State<OwnerViewPage> {
                     onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MyProperty(),
+                          builder: (context) => MyProperty(
+                            names: widget.names,
+                          ),
                         )),
                   ),
 
