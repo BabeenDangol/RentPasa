@@ -23,9 +23,9 @@ class AddPropertyForm extends StatefulWidget {
 
 const List<String> list = <String>[
   'Baneshwor',
+  'Kritipur',
   'Lalitpur',
   'Putalisadak',
-  'Four'
 ];
 final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
@@ -278,37 +278,25 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
                         ),
                         borderRadius: BorderRadius.circular(5.0),
                       ),
-                      child: TextField(
-                        controller: _propertyAddressController,
-                        decoration: InputDecoration(
-                          labelText: 'Property Address',
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.all(10.0),
-                        ),
+                      child: DropdownButton<String>(
+                        value: dropdownValue,
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.deepPurple),
+                        onChanged: (String? value) {
+                          // This is called when the user selects an item.
+                          setState(() {
+                            dropdownValue = value!;
+                          });
+                        },
+                        items:
+                            list.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
                     ),
-                  ),
-                  DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
-                    onChanged: (String? value) {
-                      // This is called when the user selects an item.
-                      setState(() {
-                        dropdownValue = value!;
-                      });
-                    },
-                    items: list.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
                   ),
                   SizedBox(width: 10.0),
                   Expanded(

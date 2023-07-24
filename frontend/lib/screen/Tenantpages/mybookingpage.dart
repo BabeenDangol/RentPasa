@@ -4,10 +4,8 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:http/http.dart' as http;
 import 'package:loginuicolors/config.dart';
 import 'package:loginuicolors/screen/dashboard_list/booked_data.dart';
-import 'package:loginuicolors/screen/dashboard_list/property_list_model.dart';
-import '../dashboard_list/booking_list.dart';
+
 import 'package:loginuicolors/utils/logger.dart';
-import 'bookingpage.dart';
 
 class MyBooking extends StatefulWidget {
   const MyBooking({Key? key}) : super(key: key);

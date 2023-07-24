@@ -2,6 +2,7 @@ class Booked {
   final String propertyId;
   final String userId;
   final String userName;
+  final int phone;
   final String ownerId;
   final String propertyAddress;
   final String propertyLocality;
@@ -17,6 +18,7 @@ class Booked {
     required this.propertyId,
     required this.userId,
     required this.userName,
+    required this.phone,
     required this.ownerId,
     required this.propertyAddress,
     required this.propertyLocality,
@@ -33,6 +35,7 @@ class Booked {
       propertyId: json['_id'] ?? '',
       userId: json['userId'] ?? '',
       userName: json['userName'] ?? '',
+      phone: json['phone'] ?? '',
       ownerId: json['ownerId'] ?? '',
       propertyAddress: json['propertyAddress'] ?? '',
       propertyLocality: json['propertyLocality'] ?? '',

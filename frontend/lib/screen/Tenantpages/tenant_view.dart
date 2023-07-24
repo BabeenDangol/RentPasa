@@ -5,7 +5,7 @@ import 'package:loginuicolors/utils/route_names.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 
 import '../Provider/propertyList.dart';
-import '../dashboard_list/booking_list.dart';
+
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:loginuicolors/utils/logger.dart';
@@ -19,8 +19,9 @@ List<String> imageList = [
 final log = logger;
 
 class TenantViewPage extends StatefulWidget {
-  final Booking? booking;
-  const TenantViewPage({Key? key, this.booking}) : super(key: key);
+  const TenantViewPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<TenantViewPage> createState() => _TenantViewPageState();
@@ -28,11 +29,6 @@ class TenantViewPage extends StatefulWidget {
 
 class _TenantViewPageState extends State<TenantViewPage> {
   @override
-  void initState() {
-    super.initState();
-    log.i(widget.booking);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

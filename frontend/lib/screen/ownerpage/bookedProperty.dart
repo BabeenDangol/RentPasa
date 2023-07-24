@@ -120,6 +120,7 @@ class _BookedPropertyState extends State<BookedProperty> {
                     itemCount: bookings.length,
                     itemBuilder: (context, index) {
                       final booking = bookings[index];
+                      bool IsOwenrbooked = booking.ownerId == widget.id;
 
                       final searchPattern = searchController.text.toLowerCase();
                       if (searchPattern.isNotEmpty &&
@@ -131,7 +132,9 @@ class _BookedPropertyState extends State<BookedProperty> {
                               .contains(searchPattern)) {
                         return Container();
                       }
-
+                      if (!IsOwenrbooked) {
+                        return Container();
+                      }
                       return CardList(
                         booking: booking,
                       );
@@ -195,7 +198,7 @@ class _CardListState extends State<CardList> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Booked by: Rs. ${widget.booking.userName}'),
-                    Text('Price: Rs. ${widget.booking.propertyRent}'),
+                    Text('Phone no:${widget.booking.phone}'),
                     Text('Address: ${widget.booking.propertyAddress}'),
                   ],
                 ),

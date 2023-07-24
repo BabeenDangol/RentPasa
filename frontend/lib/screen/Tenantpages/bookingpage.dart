@@ -6,7 +6,6 @@ import 'package:loginuicolors/screen/Tenantpages/postlisting.dart';
 import 'package:loginuicolors/screen/dashboard_list/property_list_model.dart';
 import '../../config.dart';
 import '../../utils/logger.dart';
-import '../dashboard_list/booking_list.dart';
 
 class BookingPage extends StatefulWidget {
   final PropertyList booking;
