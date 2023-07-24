@@ -233,6 +233,7 @@ class _DashboardState extends State<Dashboard> {
     List<Widget> _buildScreens() {
       return [
         OwnerViewPage(
+          token: widget.token,
           names: names,
         )
       ];

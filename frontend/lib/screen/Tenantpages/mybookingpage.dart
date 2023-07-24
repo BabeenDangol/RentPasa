@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:http/http.dart' as http;
 import 'package:loginuicolors/config.dart';
+import 'package:loginuicolors/screen/dashboard_list/booked_data.dart';
 import 'package:loginuicolors/screen/dashboard_list/property_list_model.dart';
 import '../dashboard_list/booking_list.dart';
 
@@ -16,7 +17,7 @@ class MyBooking extends StatefulWidget {
 }
 
 class _MyBookingState extends State<MyBooking> {
-  List<Booking> bookings = [];
+  List<Booked> bookings = [];
   bool isLoading = true;
   TextEditingController searchController = TextEditingController();
   @override
@@ -38,7 +39,7 @@ class _MyBookingState extends State<MyBooking> {
         if (jsonData['status'] == true && jsonData['getbooks'] is List) {
           setState(() {
             bookings = (jsonData['getbooks'] as List<dynamic>)
-                .map((item) => Booking.fromJson(item))
+                .map((item) => Booked.fromJson(item))
                 .toList();
           });
           print("Booking Details${jsonData}");
@@ -136,7 +137,7 @@ class _MyBookingState extends State<MyBooking> {
 }
 
 class CardList extends StatefulWidget {
-  final Booking booking;
+  final Booked booking;
   final String? names;
   final String? email;
   final int? phone;
@@ -185,6 +186,7 @@ class _CardListState extends State<CardList> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text('userId: ${widget.booking.userId}'),
                     Text('Price: Rs. ${widget.booking.propertyRent}'),
                     Text('Address: ${widget.booking.propertyLocality}'),
                   ],

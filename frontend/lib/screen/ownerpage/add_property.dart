@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 
 import '../Provider/propertyList.dart';
@@ -10,27 +11,54 @@ import '../Provider/propertyList.dart';
 
 class AddPropertyForm extends StatefulWidget {
   final String? token;
-  final String? role;
-  final int? phone;
 
-  AddPropertyForm({this.token, this.role, this.phone});
+  AddPropertyForm({
+    this.token,
+  });
 
   @override
   _AddPropertyFormState createState() => _AddPropertyFormState();
 }
 
+const List<String> list = <String>[
+  'Baneshwor',
+  'Lalitpur',
+  'Putalisadak',
+  'Four'
+];
 final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
 class _AddPropertyFormState extends State<AddPropertyForm> {
+  String dropdownValue = list.first;
   TextEditingController _propertyAddressController = TextEditingController();
   TextEditingController _propertyLocalityController = TextEditingController();
   TextEditingController _propertyRentController = TextEditingController();
+  TextEditingController _propertyDescriptionController =
+      TextEditingController();
   TextEditingController _bookingRemainingController = TextEditingController();
   DateTime? _selectedDate;
   String _selectedPropertyType = 'home';
   int _selectedBalcony = 1;
   int _selectedBedroom = 1;
   @override
+  late String id;
+  late String email;
+  late String names;
+  late int phone;
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode('${widget.token}');
+    id = jwtDecodedToken['_id'];
+    email = jwtDecodedToken['email'];
+    names = jwtDecodedToken['names'];
+    phone = jwtDecodedToken['phone'];
+    print("Add Property:${jwtDecodedToken}");
+    // phone = jwtDecodedToken['phone'];
+  }
+
   void _presentDatePicker() {
     showDatePicker(
       context: context,
@@ -51,7 +79,7 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
   }
 
   void _submitForm() async {
-    final String propertyAddress = _propertyAddressController.text;
+    final String propertyAddress = dropdownValue.toString();
     final String propertyLocality = _propertyLocalityController.text;
     final String propertyRent = _propertyRentController.text;
     final String bookingRemaining = _bookingRemainingController.text;
@@ -60,14 +88,19 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
     final String bedroomCount = _selectedBedroom.toString();
     final String propertyDate =
         _selectedDate != null ? formatter.format(_selectedDate!) : '';
-
+    final String propertyDescription = _propertyDescriptionController.text;
     if (propertyAddress.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please enter property address')),
       );
       return;
     }
-
+    if (names.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Owner name is missing or empty')),
+      );
+      return;
+    }
     if (propertyLocality.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please enter property locality')),
@@ -97,6 +130,8 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
 
     final Map<String, String> requestBody = {
       'propertyAddress': propertyAddress,
+      'ownerId': id,
+      'ownerName': names,
       'propertyLocality': propertyLocality,
       'propertyRent': propertyRent,
       'bookingRemaining': bookingRemaining,
@@ -104,10 +139,11 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
       'propertyBalconyCount': balconyCount,
       'propertyBedroomCount': bedroomCount,
       'propertyDate': propertyDate,
+      'propertyDescriptions': propertyDescription,
     };
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.72:3000/bookings'),
+      Uri.parse('http://192.168.1.72:3000/property'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(requestBody),
     );
@@ -250,7 +286,29 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10.0),
+                  DropdownButton<String>(
+                    value: dropdownValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String? value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                    items: list.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(width: 10.0),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
@@ -437,6 +495,31 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: 'Booking Remaining',
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.all(10.0),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Property Description',
+                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10.0),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: TextField(
+                  controller: _propertyDescriptionController,
+                  decoration: InputDecoration(
+                    labelText: 'Say Somthing About you place',
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.all(10.0),
                   ),

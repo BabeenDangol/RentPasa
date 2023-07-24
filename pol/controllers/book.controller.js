@@ -1,10 +1,11 @@
 const BookService = require('../services/book.services.js');
 
 // Create a new booking
-const createBooking = async (req, res, next) => {
+const createBook = async (req, res, next) => {
   try {
     const {
       userId,
+      userName,
       propertyAddress,
       propertyLocality,
       propertyRent,
@@ -12,17 +13,20 @@ const createBooking = async (req, res, next) => {
       propertyBalconyCount,
       propertyBedroomCount,
       propertyDate,
+      propertyDescriptions
     } = req.body;
 
     const booking = await BookService.createBook(
       userId,
+      userName,
       propertyAddress,
       propertyLocality,
       propertyRent,
       propertyType,
       propertyBalconyCount,
       propertyBedroomCount,
-      propertyDate
+      propertyDate,
+      propertyDescriptions
     );
 
     res.status(201).json({
@@ -103,7 +107,7 @@ const deleteBooking = async (req, res, next) => {
 };
 
 module.exports = {
-  createBooking,
+  createBook,
   updateBooking,
   deleteBooking,
 };

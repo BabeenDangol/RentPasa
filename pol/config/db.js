@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const UserModel = require('../model/user.model');
-const BookingsModel = require('../model/bookings.model');
+const PropertyModel = require('../model/property.model');
 
 const url = 'mongodb://localhost:27017/rolebaby';
 
@@ -13,7 +13,7 @@ const connect = () => {
 
         // Make the Mongoose connection accessible from your models
         UserModel.connection = mongoose.connection;
-        BookingsModel.connection = mongoose.connection;
+        PropertyModel.connection = mongoose.connection;
         resolve();
       })
       .catch((error) => {

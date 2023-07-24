@@ -16,7 +16,7 @@ class Welcome {
   factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
         status: json["status"],
         booking: List<PropertyList>.from(
-            json["booking"].map((x) => PropertyList.fromJson(x))),
+            json["property"].map((x) => PropertyList.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,6 +29,7 @@ class PropertyList {
   int bookingRemaining;
   String id;
   String propertyAddress;
+  String? ownerName;
   String? propertyLocality;
   int propertyRent;
   String propertyType;
@@ -42,6 +43,7 @@ class PropertyList {
     required this.bookingRemaining,
     required this.id,
     required this.propertyAddress,
+    this.ownerName,
     this.propertyLocality,
     required this.propertyRent,
     required this.propertyType,
@@ -56,6 +58,7 @@ class PropertyList {
         bookingRemaining: json["bookingRemaining"] ?? 0,
         id: json["_id"],
         propertyAddress: json["propertyAddress"],
+        ownerName: json["ownerName"],
         propertyLocality: json["propertyLocality"],
         propertyRent: json["propertyRent"],
         propertyType: json["propertyType"],

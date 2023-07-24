@@ -86,6 +86,7 @@ class _PostListingState extends State<PostListing> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      Text("${property.ownerName}"),
                                       Text("${property.propertyRent}"),
                                       Text("${property.propertyDate}"),
                                       Text("${property.propertyLocality}"),

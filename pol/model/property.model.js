@@ -2,12 +2,14 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const bookingsSchema = new mongoose.Schema({
+const propertySchema = new mongoose.Schema({
   
   propertyAddress: {
     type: String,
     // required: true,
   },
+  ownerName: {type: String},
+  ownerId: {type: String},
   propertyLocality: { 
     type: String, //required: true
  },
@@ -36,7 +38,7 @@ const bookingsSchema = new mongoose.Schema({
     // required: true,
   },
   bookingRemaining: { type: Number, default: 3 },
-  ownerId: { type: Schema.Types.ObjectId, ref: 'User' },
+  // ownerId: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
-module.exports = mongoose.model('Bookings', bookingsSchema);
+module.exports = mongoose.model('Property', propertySchema);

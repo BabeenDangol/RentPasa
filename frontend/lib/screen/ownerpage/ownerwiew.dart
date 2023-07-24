@@ -3,11 +3,13 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:loginuicolors/screen/ownerpage/myproperty.dart';
 import '../../add_property_form.dart';
 import 'add_property.dart';
+import 'bookedProperty.dart';
 
 class OwnerViewPage extends StatefulWidget {
   final String names;
-
-  const OwnerViewPage({Key? key, required this.names}) : super(key: key);
+  final String token;
+  const OwnerViewPage({Key? key, required this.names, required this.token})
+      : super(key: key);
   @override
   State<OwnerViewPage> createState() => _OwnerViewPageState();
 }
@@ -22,8 +24,9 @@ class _OwnerViewPageState extends State<OwnerViewPage> {
       builder: (context) => FractionallySizedBox(
         heightFactor: 0.9,
         child: AddPropertyForm(
-            // onAddExpense: _addExpense,
-            ),
+          token: widget.token,
+          // onAddExpense: _addExpense,
+        ),
       ), //must provide a function as a value.
     );
   }
@@ -75,25 +78,34 @@ class _OwnerViewPageState extends State<OwnerViewPage> {
                     ),
                     color: const Color.fromARGB(255, 247, 247, 247),
                     onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyProperty(
-                            names: widget.names,
-                          ),
-                        )),
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyProperty(
+                          names: widget.names,
+                        ),
+                      ),
+                    ),
                   ),
 
                   GridCard(
-                      icons: Icon(Icons.add_a_photo_outlined),
-                      text: Text(
-                        "Booked Property",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                    icons: Icon(Icons.add_a_photo_outlined),
+                    text: Text(
+                      "Booked Property",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookedProperty(
+                          names: widget.names,
                         ),
                       ),
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      onPressed: () => navigateToPage(context, '/page3')),
+                    ),
+                  ),
                 ],
               ),
             ),

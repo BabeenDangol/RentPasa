@@ -13,8 +13,8 @@ class DataUtil {
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
         print("Data;${jsonData}");
-        if (jsonData['status'] == true && jsonData['booking'] is List) {
-          propertyData = (jsonData['booking'] as List<dynamic>)
+        if (jsonData['status'] == true && jsonData['property'] is List) {
+          propertyData = (jsonData['property'] as List<dynamic>)
               .map((item) => PropertyList.fromJson(item))
               .toList();
         }
