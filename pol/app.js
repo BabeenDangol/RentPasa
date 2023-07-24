@@ -7,20 +7,20 @@ const { url } = require('inspector');
 
 
 const app = express();
-app.use(cors());
 app.use(cors({
-  origin: 'http://localhost:5173' // Replace with the URL of your frontend application
+  origin: '*' // Replace with the URL of your frontend application
 }));
 app.use(
   express.urlencoded({ extended: true })
 );
 app.use(express.json());
 app.use(bodyParser.json());
+
 app.use('/user', userRouter);
-app.use('/booking', bookingsRouter);
+// app.use('/booking', bookingsRouter);
+app.use('/property', propertyRouter);
+app.use('/book', bookRouter);
 
 
-  // Enable CORS with options
-  app.use(cors({ origin: '*' }));
 
 module.exports = app;

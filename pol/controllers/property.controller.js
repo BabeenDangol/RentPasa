@@ -110,26 +110,9 @@ exports.uploadImage = async (req, res, next) => {
       return res.status(400).json({ status: false, message: 'No image provided' });
     }
 
-    const { path, originalname } = req.file;
+    const fileName = req.file.fileName;
 
-    console.log('Original File Name:', originalname);
-    console.log('File Path:', path);
-
-    // Create a unique filename by appending the image count to a prefix (e.g., "image_1.jpg", "image_2.jpg", etc.)
-    const imageFileName = `image_${imageCount}.jpg`;
-
-    // Move the uploaded image to the 'uploads' folder with the unique filename
-    const newPath = `uploads/${imageFileName}`;
-    fs.renameSync(path, newPath);
-
-    // Increment the image count for the next uploaded image
-    imageCount++;
-
-    // You can perform any other image-related operations here, if needed.
-
-    console.log('Image uploaded successfully');
-
-    res.status(200).json({ status: true, message: 'Image uploaded successfully' });
+    res.status(200).json({ status: true, message: `Image uploaded successfully at ${fileName}` });
   } catch (error) {
     console.error(error);
     next(error);
