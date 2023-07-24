@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:loginuicolors/utils/route_names.dart';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../models/post_data.dart';
 import '../Provider/propertyList.dart';
 import '../dashboard_list/booking_list.dart';
-import '../dashboard_list/dashboard_list.dart';
-<<<<<<< HEAD
+// import '../dashboard_list/dashboard_list.dart';
 import 'package:provider/provider.dart';
-=======
 import 'package:carousel_slider/carousel_slider.dart';
+
+import 'bookingpage.dart';
 
 List<String> imageList = [
   'assets/exide-ad.jpg',
@@ -16,7 +16,6 @@ List<String> imageList = [
   'assets/nimb-ad.jpg',
   // Add more image paths here
 ];
->>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
 
 class TenantViewPage extends StatefulWidget {
   final Booking? booking;
@@ -55,15 +54,9 @@ class _TenantViewPageState extends State<TenantViewPage> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     return Consumer<PropertyListProvider>(
       builder: (context, provider, child) => Scaffold(
         body: SingleChildScrollView(
-=======
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Expanded(
->>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -120,6 +113,30 @@ class _TenantViewPageState extends State<TenantViewPage> {
                   ],
                 ),
               ),
+              SizedBox(
+                  height: 200,
+                  child: CarouselSlider(
+                    items: imageList.map((imagePath) {
+                      return Container(
+                          // Set the desired fixed width
+                          child: ClipRRect(
+                        child: Image.asset(
+                          imagePath,
+                          width: 400,
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ));
+                    }).toList(),
+                    options: CarouselOptions(
+                      autoPlay: true,
+                      aspectRatio: 22 / 8,
+                      enlargeCenterPage: true,
+                      autoPlayInterval: Duration(seconds: 6),
+                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                    ),
+                  )),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 25,
@@ -147,47 +164,13 @@ class _TenantViewPageState extends State<TenantViewPage> {
               const SizedBox(
                 height: 5,
               ),
-<<<<<<< HEAD
-              Dashboardlist(posts: imageList),
+              // Dashboardlist(posts: postList),
+              SlideableList(),
+
+              // IconRow(),
               SizedBox(
                 height: 25,
               ),
-              IconRow(),
-              SizedBox(
-                height: 25,
-              )
-=======
-              Dashboardlist(posts: postList),
-
-              // IconRow(),
-              // SizedBox(
-              //   height: 25,
-              // ),
-              SizedBox(
-                  height: 200,
-                  child: CarouselSlider(
-                    items: imageList.map((imagePath) {
-                      return Container(
-                          // Set the desired fixed width
-                          child: ClipRRect(
-                        child: Image.asset(
-                          imagePath,
-                          width: 400,
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.circular(15),
-                      ));
-                    }).toList(),
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      aspectRatio: 22 / 8,
-                      enlargeCenterPage: true,
-                      autoPlayInterval: Duration(seconds: 6),
-                      autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      autoPlayCurve: Curves.fastOutSlowIn,
-                    ),
-                  )),
->>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
             ],
           ),
         ),
@@ -262,6 +245,130 @@ class IconRow extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class SlideableList extends StatelessWidget {
+  const SlideableList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<PropertyListProvider>(
+      builder: (context, provider, child) => Container(
+        height: 270,
+        child: SingleChildScrollView(
+          scrollDirection:
+              Axis.horizontal, // Set the scroll direction to horizontal
+          child: Row(
+            children: List.generate(
+              provider.propertylist.length,
+              (index) {
+                final property = provider.propertylist[index];
+                return Container(
+                  width: 250,
+                  height: 300,
+                  margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookingPage(booking: property),
+                      ),
+                    ),
+                    child: Hero(
+                      tag: property.id,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey, width: 0.2),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15),
+                              ),
+                              child: Image.asset(
+                                'assets/modern.jpg',
+                                height: 125,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(15, 15, 10, 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    property.propertyAddress,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_city,
+                                        size: 25,
+                                        color: Colors.black,
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        '${property.propertyLocality}',
+                                        style: TextStyle(
+                                          fontSize: 10.5,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(width: 55),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.money),
+                                      Text(" Rs ${property.propertyRent}"),
+                                    ],
+                                  ),
+                                  RatingBar.builder(
+                                    itemSize: 20,
+                                    initialRating: 3,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemBuilder: (context, index) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (value) => print(value),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
       ),
     );
   }

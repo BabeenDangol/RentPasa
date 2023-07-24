@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:loginuicolors/screen/Provider/propertyList.dart';
 import 'package:loginuicolors/screen/Tenantpages/bookingpage.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 // Your existing ListData widget code remains unchanged
 
 class PostListing extends StatelessWidget {
@@ -77,13 +77,33 @@ class PostListing extends StatelessWidget {
                                       SizedBox(
                                         height: 20,
                                       ),
+                                      RatingBar.builder(
+                                        initialRating: 3,
+                                        itemSize: 25,
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        itemPadding: EdgeInsets.symmetric(
+                                            horizontal: 4.0),
+                                        itemBuilder: (context, _) => Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        onRatingUpdate: (rating) {
+                                          print(rating);
+                                        },
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           ElevatedButton(
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.teal,
+                                              backgroundColor: Colors.white,
                                             ),
                                             onPressed: () {
                                               Navigator.push(
@@ -101,7 +121,7 @@ class PostListing extends StatelessWidget {
                                           ),
                                           ElevatedButton(
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.teal,
+                                              backgroundColor: Colors.white,
                                             ),
                                             onPressed: () {
                                               if (provider.propertylist[index]

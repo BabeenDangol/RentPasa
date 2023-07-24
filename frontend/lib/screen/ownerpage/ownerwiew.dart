@@ -63,7 +63,7 @@ class _OwnerViewPageState extends State<OwnerViewPage> {
                   GridCard(
                       icons: Icon(Icons.add_a_photo_outlined),
                       text: Text(
-                        "My Propery",
+                        "My Property",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

@@ -1,37 +1,36 @@
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatefulWidget {
+import '../Tenantpages/aboutus.dart';
+import '../Tenantpages/privacypolicy.dart';
+
+class OwnerSettings extends StatelessWidget {
+  // const OwnerSettings({Key? key}) : super(key: key);
   final String? names;
   final String? email;
   final int? phone;
   final String? id;
 
-  ProfilePage({
+  OwnerSettings({
     this.id,
     this.names,
     this.email,
     this.phone,
   });
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
 
-class _ProfilePageState extends State<ProfilePage> {
-  bool IsReadonly = true;
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
+    return Scaffold(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Stack(
               children: [
                 Container(
-                  height: 300,
+                  height: 250,
                   color: Colors.white,
                 ),
                 Positioned(
-                  height: 250,
+                  height: 200,
                   width: 300,
                   top: 50,
                   left: 60,
@@ -67,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text(
-                            "${widget.names}",
+                            "${names}",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -84,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text(
-                            '${widget.email}',
+                            '${email}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -101,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text(
-                            '+977-${widget.phone}',
+                            '+977-${phone}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -110,6 +109,39 @@ class _ProfilePageState extends State<ProfilePage> {
                           trailing: Icon(Icons.phone),
                         ),
                         Divider(),
+                        ListTile(
+                          leading: Icon(Icons.privacy_tip),
+                          title: Text(
+                            'Privacy Policy',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          trailing: Icon(Icons.arrow_right),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PrivacyPolicy()));
+                          },
+                        ),
+                        Divider(),
+                        ListTile(
+                          leading: Icon(Icons.person),
+                          title: Text(
+                            'About Us',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          trailing: Icon(Icons.arrow_right),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AboutUsPage()));
+                          },
+                        )
                       ],
                     ),
                   )

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loginuicolors/screen/dashboard_list/roomdetailpage.dart';
 import 'package:provider/provider.dart';
 // import 'package:khalti_flutter/khalti_flutter.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+// import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../models/post_data.dart';
 import '../Provider/propertyList.dart';
 
@@ -28,7 +28,6 @@ class DashboardItem extends StatelessWidget {
                   ),
                 ),
               ),
-<<<<<<< HEAD
               child: Hero(
                 tag: post.imagePath, // Unique tag for each room
                 child: Container(
@@ -44,34 +43,6 @@ class DashboardItem extends StatelessWidget {
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset: Offset(0, 3),
-=======
-            ),
-            child: Hero(
-              tag: post.imagePath, // Unique tag for each room
-              child: Container(
-                width: 250,
-                height: 400,
-                margin: const EdgeInsets.fromLTRB(0, 15, 5, 20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.grey, width: 0.2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
-                child: Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15),
->>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
                       ),
                     ],
                     borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -111,7 +82,6 @@ class DashboardItem extends StatelessWidget {
                                       size: 25,
                                       color: Colors.black,
                                     ),
-<<<<<<< HEAD
                                     const SizedBox(width: 5),
                                     Text(
                                       post.description,
@@ -133,38 +103,6 @@ class DashboardItem extends StatelessWidget {
                             ),
                           ],
                         ),
-=======
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(width: 55),
-                              Row(
-                                children: [
-                                  Icon(Icons.money),
-                                  Text(" Rs ${post.amount}"),
-                                ],
-                              ),
-                              RatingBar.builder(
-                                itemSize: 20,
-                                initialRating: 3,
-                                minRating: 1,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 5,
-                                itemPadding:
-                                    EdgeInsets.symmetric(horizontal: 4.0),
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ),
-                                onRatingUpdate: (rating) {
-                                  print(rating);
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
->>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
                       ),
                     ],
                   ),

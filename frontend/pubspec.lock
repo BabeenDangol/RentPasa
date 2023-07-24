@@ -544,15 +544,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+4"
-<<<<<<< HEAD
-  process:
-    dependency: transitive
-    description:
-      name: process
-      sha256: "53fd8db9cec1d37b0574e12f07520d582019cb6c44abf5479a01505099a34a09"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.4"
   provider:
     dependency: "direct main"
     description:
@@ -561,8 +552,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
-=======
->>>>>>> 0d79c27aa2989ecd282d45b329f63645d4e6f4ce
   shared_preferences:
     dependency: "direct main"
     description:

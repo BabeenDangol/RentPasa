@@ -6,6 +6,7 @@ import 'package:loginuicolors/screen/Tenantpages/postlisting.dart';
 import 'package:loginuicolors/screen/dashboard_list/property_list_model.dart';
 import '../../config.dart';
 import '../dashboard_list/booking_list.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class BookingPage extends StatefulWidget {
   final PropertyList booking;
@@ -34,10 +35,16 @@ class _BookingPageState extends State<BookingPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            // Container(
+            //   height: 200,
+            //   width: double.infinity,
+            //   color: Colors.grey,
+            // ),
+            Image.asset(
+              'assets/room.jpg',
               height: 200,
               width: double.infinity,
-              color: Colors.grey,
+              fit: BoxFit.cover,
             ),
             SizedBox(
               height: 20,
@@ -150,6 +157,15 @@ class _BookingPageState extends State<BookingPage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Rating",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
                       Column(
@@ -167,6 +183,25 @@ class _BookingPageState extends State<BookingPage> {
                             height: 20,
                           ),
                           Text("${widget.booking.id}"),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          RatingBar.builder(
+                            initialRating: 3,
+                            itemSize: 30,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            onRatingUpdate: (rating) {
+                              print(rating);
+                            },
+                          ),
                         ],
                       )
                     ],
@@ -183,25 +218,29 @@ class _BookingPageState extends State<BookingPage> {
                 children: [
                   ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.teal),
-                      elevation: MaterialStatePropertyAll(8),
+                      backgroundColor: MaterialStatePropertyAll(Colors.white),
+                      elevation: MaterialStatePropertyAll(5),
                     ),
-                    onPressed: bookProperty,
+                    onPressed: bookPropertyMethod,
                     child: Text(
                       'Book Property',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Color(0xFF6B4C85),
+                      ),
                     ),
                   ),
-                  SizedBox(width: 60),
+                  SizedBox(width: 50),
                   ElevatedButton(
                     style: ButtonStyle(
                       elevation: MaterialStatePropertyAll(8),
-                      backgroundColor: MaterialStatePropertyAll(Colors.teal),
+                      backgroundColor: MaterialStatePropertyAll(Colors.white),
                     ),
                     onPressed: payWithKhaltiInApp,
                     child: Text(
                       'Book in Advance',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Color(0xFF6B4C85),
+                      ),
                     ),
                   ),
                 ],
@@ -302,5 +341,25 @@ class _BookingPageState extends State<BookingPage> {
 
   void onCancel() {
     debugPrint("Cancelled");
+  }
+
+  bookPropertyMethod() {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Room Booked !"),
+            content: Text(
+                "Your room has been booked. We will contact your shortly."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        });
   }
 }

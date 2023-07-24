@@ -104,7 +104,7 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
     };
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.72:3000/bookings'),
+      Uri.parse('http://192.168.1.65:3000/bookings'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(requestBody),
     );
@@ -116,6 +116,12 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
       var jsonResponse = jsonDecode(response.body);
 
       if (jsonResponse['status']) {
+        // try {
+        //   await Provider.of<PropertyListProvider>(context, listen: false)
+        //       .refreshData();
+        // } catch (e) {
+        //   throw (e);
+        // }
         // String names  = jsonResponse['names'];
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -123,6 +129,7 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
             duration: Duration(seconds: 3),
           ),
         );
+
         Navigator.pop(context);
         // Navigator.pushNamed(
         //   context,
