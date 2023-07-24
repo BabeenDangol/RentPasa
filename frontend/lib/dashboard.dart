@@ -151,7 +151,7 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.colors.prRed,
+        backgroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -171,10 +171,10 @@ class _DashboardState extends State<Dashboard> {
       ),
       body: _buildScreens()[_currentIndex],
       bottomNavigationBar: Container(
-        height: 100,
+        height: 95,
         child: BottomNavigationBar(
-          backgroundColor: AppTheme.colors.srRed,
-          selectedItemColor: AppTheme.colors.prRed,
+          backgroundColor: Color(0xFF764A9C),
+          selectedItemColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (int index) {
@@ -242,7 +242,10 @@ class _DashboardState extends State<Dashboard> {
           )
         ]);
       },
-      child: Icon(Icons.logout, size: 30),
+      child: Icon(
+        Icons.logout,
+        size: 30,
+      ),
     );
   }
 
