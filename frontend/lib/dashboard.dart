@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:loginuicolors/screen/Tenantpages/listing2.dart';
+import 'package:loginuicolors/screen/Tenantpages/mybookingpage.dart';
 import 'package:loginuicolors/screen/Tenantpages/profile.dart';
 import 'package:loginuicolors/screen/Tenantpages/postlisting.dart';
 import 'package:loginuicolors/screen/Tenantpages/search.dart';
 import 'package:loginuicolors/screen/Tenantpages/setting.dart';
 import 'package:loginuicolors/screen/Tenantpages/tenant_view.dart';
+import 'package:loginuicolors/screen/ownerpage/ownerwiew.dart';
 import 'package:loginuicolors/utils/route_names.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'colors/colors.dart';
@@ -56,12 +59,11 @@ class _DashboardState extends State<Dashboard> {
   void didUpdateWidget(Dashboard oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.names != oldWidget.names ||
-        // widget.phone != oldWidget.phone ||
         widget.id != oldWidget.id ||
         widget.email != oldWidget.email) {
       setState(() {
         names = widget.names!;
-        // phone = widget.phone!;
+
         id = widget.id!;
         email = widget.email!;
       });
@@ -77,15 +79,12 @@ class _DashboardState extends State<Dashboard> {
   }
 
   void _navigateToAddPropertyForm() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AddPropertyForm(
-            // token: widget.token,
-            // role: widget.role,
-            ),
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => AddPropertyForm(),
+    //   ),
+    // );
   }
 
   Widget _buildDashboardContent() {
@@ -128,16 +127,24 @@ class _DashboardState extends State<Dashboard> {
         'label': "Settings",
       },
     ];
+    //Dashboard List
     List<Widget> _buildScreens() {
       return [
         TenantViewPage(),
-        Search(),
-        GetDataPage(
+        // MyBooking(),
+        ListData(),
+        PostListing(
           email: email,
           names: names,
           phone: phone,
           id: id,
         ),
+        // GetDataPage(
+        //   email: email,
+        //   names: names,
+        //   phone: phone,
+        //   id: id,
+        // ),
         ProfilePage(
           email: email,
           names: names,
@@ -150,6 +157,7 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.teal,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -186,9 +194,13 @@ class _DashboardState extends State<Dashboard> {
               icon: Icon(Icons.home_outlined),
               label: "Home",
             ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.room),
+            //   label: "My Booking ",
+            // ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: "Search",
+              icon: Icon(Icons.room),
+              label: "List Data ",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.add_outlined),
@@ -209,37 +221,107 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _buildOwnerDashboard() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('Welcome Owner: $email'),
-        Text('Welcome Owner: $names'),
-        Text('Welcome Owner: $phone'),
-        SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: _navigateToAddPropertyForm,
-          child: Text('Add Property'),
+    final List<Map<String, dynamic>> appBarTitles = [
+      {
+        'icon': Icons.home,
+        'label': "Home",
+      },
+      {
+        'icon': Icons.search,
+        'label': "More",
+      },
+    ];
+    //Dashboard List
+    List<Widget> _buildScreens() {
+      return [OwnerViewPage()];
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.teal,
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(appBarTitles[_currentIndex]['icon']),
+            Text(
+              appBarTitles[_currentIndex]['label'],
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(
+              width: 150,
+            ),
+            _buildLogoutButton(),
+          ],
         ),
-        SizedBox(height: 20),
-        _buildLogoutButton(),
-      ],
+      ),
+      body: _buildScreens()[_currentIndex],
+      bottomNavigationBar: Container(
+        height: 80,
+        child: BottomNavigationBar(
+          backgroundColor: Color.fromARGB(255, 103, 129, 124),
+          selectedItemColor: tdpurple3,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _currentIndex,
+          onTap: (int index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.room),
+              label: "More ",
+            ),
+          ],
+        ),
+      ),
     );
   }
+  //   return Column(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     children: [
+  //       SizedBox(height: 20),
+  //       ElevatedButton(
+  //         onPressed: _navigateToAddPropertyForm,
+  //         child: Text('Add Property'),
+  //       ),
+  //       SizedBox(height: 20),
+  //       _buildLogoutButton(),
+  //     ],
+  //   );
+  // }
 
   Widget _buildLogoutButton() {
     return TextButton(
       onPressed: () {
-        showAboutDialog(context: context, children: [
-          AlertDialog(
-            content: Text("Hello"),
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: const Text(
+              "Are you sure",
+              style: TextStyle(fontSize: 16),
+            ),
             actions: [
-              Title(
-                color: Colors.black,
-                child: Text("Are you sure?"),
-              )
+              TextButton(
+                onPressed: _logOut,
+                child: const Text("Yes"),
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("NO"))
             ],
-          )
-        ]);
+          ),
+        );
+        return;
       },
       child: Icon(Icons.logout, size: 30),
     );

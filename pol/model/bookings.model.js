@@ -31,6 +31,10 @@ const bookingsSchema = new mongoose.Schema({
     type: Date,
     // required: true,
   },
+  propertyDescriptions: {
+    type: String,
+    // required: true,
+  },
   bookingRemaining: { type: Number, default: 3 },
   ownerId: { type: Schema.Types.ObjectId, ref: 'User' },
 });

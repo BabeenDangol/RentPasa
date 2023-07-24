@@ -1,12 +1,10 @@
-// final url = 'http://localhost:3000/';
-// final registration = url + "registration";
-// final login = url + 'login';
-// final createProperty = url + 'createProperty';
-
-final url = 'http://192.168.92.223:3000/';
+// final url = 'http://192.168.92.223:3000/';
+final url = 'http://192.168.1.72:3000/';
+// final url = 'http://192.168.137.1:3000/';
 final registration = url + "registration";
 final login = url + 'login';
-final createBooking = 'bookings';
+final createBooking = url + 'bookings';
 final createBook = url + 'createBook';
+final getbooks = url + 'getbooks';
 final getUserBookings = url + "getbooking";
 // final getUserBookings = url + 'bookings';

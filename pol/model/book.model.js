@@ -11,7 +11,7 @@ const bookSchema = new mongoose.Schema({
   propertyBalconyCount: { type: Number, required: true },
   propertyBedroomCount: { type: Number, required: true },
   propertyDate: { type: Date, required: true },
-  bookingRemaining: { type: Number, default: 3 },
+  bookingRemaining: { type: Number },
 });
 
 module.exports = mongoose.model('Book', bookSchema);

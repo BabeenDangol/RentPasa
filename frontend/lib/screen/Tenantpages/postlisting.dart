@@ -1,269 +1,166 @@
-import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:http/http.dart' as http;
-import 'package:loginuicolors/config.dart';
-import '../dashboard_list/booking_list.dart';
+import 'package:loginuicolors/screen/Provider/propertyList.dart';
+import 'package:loginuicolors/screen/Tenantpages/bookingpage.dart';
+import 'package:provider/provider.dart';
 
-import 'bookingpage.dart';
+// Your existing ListData widget code remains unchanged
 
-class GetDataPage extends StatefulWidget {
-  final String? id;
-  final String? names;
-  final String? email;
+class PostListing extends StatelessWidget {
+  final String email;
+  final String names;
   final int? phone;
-
-  GetDataPage({this.id, this.names, this.email, this.phone});
-
-  @override
-  _GetDataPageState createState() => _GetDataPageState();
-}
-
-class _GetDataPageState extends State<GetDataPage> {
-  List<Booking> bookings = [];
-  bool isLoading = true;
-  TextEditingController searchController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
-  Future<void> fetchData() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    try {
-      final response = await http.get(Uri.parse(getUserBookings));
-      if (response.statusCode == 200) {
-        final jsonData = jsonDecode(response.body);
-
-        if (jsonData['status'] == true && jsonData['booking'] is List) {
-          setState(() {
-            bookings = (jsonData['booking'] as List<dynamic>)
-                .map((item) => Booking.fromJson(item))
-                .toList();
-          });
-          print("Booking Details${jsonData}");
-        } else {
-          print('Invalid response format or no booking data');
-        }
-      } else {
-        print('Failed to fetch data: ${response.reasonPhrase}');
-      }
-    } catch (error) {
-      print('Error: $error');
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-
-  List<String> searchBookings(String pattern) {
-    return bookings
-        .where((booking) =>
-            booking.propertyAddress
-                .toLowerCase()
-                .contains(pattern.toLowerCase()) ||
-            booking.propertyLocality
-                .toLowerCase()
-                .contains(pattern.toLowerCase()))
-        .map((booking) => booking.propertyAddress)
-        .toList();
-  }
+  final String id;
+  PostListing(
+      {Key? key,
+      required this.email,
+      required this.names,
+      this.phone,
+      required this.id})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TypeAheadField<String>(
-                    textFieldConfiguration: TextFieldConfiguration(
-                      controller: searchController,
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Search',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    suggestionsCallback: (pattern) async {
-                      return searchBookings(pattern);
-                    },
-                    itemBuilder: (context, suggestion) {
-                      return ListTile(
-                        title: Text(suggestion),
-                      );
-                    },
-                    onSuggestionSelected: (suggestion) {
-                      searchController.text = suggestion;
-                    },
-                    suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                      constraints: BoxConstraints(maxHeight: 210.0),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: bookings.length,
-                    itemBuilder: (context, index) {
-                      final booking = bookings[index];
-                      final searchPattern = searchController.text.toLowerCase();
-                      if (searchPattern.isNotEmpty &&
-                          !booking.propertyAddress
-                              .toLowerCase()
-                              .contains(searchPattern) &&
-                          !booking.propertyLocality
-                              .toLowerCase()
-                              .contains(searchPattern)) {
-                        return Container();
-                      }
-                      return CardList(
-                        id: widget.id,
-                        booking: booking,
-                        names: widget.names,
-                        email: widget.email,
-                        phone: widget.phone,
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-    );
-  }
-}
-
-class CardList extends StatefulWidget {
-  final Booking booking;
-  final String? names;
-  final String? email;
-  final int? phone;
-  final String? id;
-
-  CardList(
-      {required this.booking, this.id, this.email, this.names, this.phone});
-
-  @override
-  _CardListState createState() => _CardListState();
-}
-
-class _CardListState extends State<CardList> {
-  bool isBookingFull = false;
-
-  @override
-  void initState() {
-    super.initState();
-    checkBookingFull();
-  }
-
-  void checkBookingFull() {
-    if (widget.booking.bookingRemaining <= 0) {
-      setState(() {
-        isBookingFull = true;
-      });
-    } else {
-      setState(() {
-        isBookingFull = false;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    var size = MediaQuery.of(context).size;
+    return Consumer<PropertyListProvider>(
+      builder: (context, provider, child) => Scaffold(
+        body: Container(
+          height:
+              size.height - const CupertinoNavigationBar().preferredSize.height,
+          width: size.width,
+          child: Column(
             children: [
-              ListTile(
-                title: Text(widget.booking.propertyAddress),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Price: Rs. ${widget.booking.propertyRent}'),
-                    Text('Address: ${widget.booking.propertyLocality}'),
-                    Text('Address: ${widget.names}'),
-                  ],
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color.fromARGB(255, 213, 211, 208),
+                    label: Text("search"),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    provider.updateSearch(value);
+                    print(value);
+                  },
                 ),
               ),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BookingPage(
-                              booking: widget.booking,
-                              names: widget.names,
-                              id: widget.id),
-                        ),
-                      );
-                    },
-                    child: Text('ℹ️ Get Information'),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                    ),
-                    onPressed: () {
-                      if (!isBookingFull) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BookingPage(
-                              booking: widget.booking,
-                              names: widget.names,
-                              email: widget.email,
-                              phone: widget.phone,
-                              id: widget.id,
+              Expanded(
+                child: ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    itemCount: provider.filteredPropertyList.length,
+                    itemBuilder: (context, index) {
+                      final property = provider.filteredPropertyList[index];
+                      return Column(
+                        children: [
+                          Card(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            elevation: 10,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 16),
+                                ListTile(
+                                  title: Text(
+                                    "${property.propertyAddress}",
+                                  ),
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text("${property.propertyRent}"),
+                                      Text("${property.propertyDate}"),
+                                      Text("${property.propertyLocality}"),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.teal,
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      BookingPage(
+                                                    booking: property,
+                                                    id: id,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Text('ℹ️ Get Information'),
+                                          ),
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.teal,
+                                            ),
+                                            onPressed: () {
+                                              if (provider.propertylist[index]
+                                                      .bookingRemaining <=
+                                                  3) {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        BookingPage(
+                                                      booking: provider
+                                                          .propertylist[index],
+                                                    ),
+                                                  ),
+                                                );
+                                              } else if (provider
+                                                      .propertylist[index]
+                                                      .bookingRemaining <=
+                                                  0) {
+                                                Positioned(
+                                                  top: 0,
+                                                  right: 0,
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    color: Colors.red,
+                                                    child: Text(
+                                                      'Booking Full',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            child: Text('📅 Book Now'),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 16),
+                              ],
                             ),
                           ),
-                        );
-                      }
-                    },
-                    child: Text('📅 Book Now'),
-                  ),
-                ],
+                          SizedBox(
+                              height:
+                                  16), // Add a gap of 16 pixels between each Card
+                        ],
+                      );
+                    }),
               ),
-              SizedBox(height: 16),
             ],
           ),
-          if (isBookingFull)
-            Positioned(
-              top: 0,
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.all(8.0),
-                color: Colors.red,
-                child: Text(
-                  'Booking Full',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-        ],
+        ),
       ),
     );
   }

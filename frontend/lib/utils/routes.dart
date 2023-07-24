@@ -44,7 +44,7 @@ class Routes {
       case RouteName.listing:
         {
           return MaterialPageRoute(
-            builder: (context) => GetDataPage(
+            builder: (context) => PostListing(
               names: "",
               email: "",
               id: "",

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:loginuicolors/propertydetails.dart';
+import 'package:loginuicolors/screen/Provider/propertyList.dart';
+import 'package:provider/provider.dart';
 import '/dashboard.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,37 +47,44 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return KhaltiScope(
-      publicKey: 'test_public_key_f0ef86cb580946bd8d2e6eea13d26639',
-      enabledDebugging: true,
-      builder: (context, navKey) => MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.black,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => PropertyListProvider(),
         ),
-        initialRoute: (token != null && JwtDecoder.isExpired(token) == false)
-            ? 'dashboard'
-            : 'login',
-        routes: {
-          'login': (context) => MyLogin(),
-          'register': (context) => MyRegister(),
-          'dashboard': (context) => Dashboard(
-                token: token!,
-                role: role!,
-                names: names,
-                phone: phone,
-                id: id,
-                email: email,
-              ),
-          'propertydetails': (context) => PropertyDetailPage(),
-        },
-        navigatorKey: navKey,
-        localizationsDelegates: const [
-          KhaltiLocalizations.delegate,
-        ],
+      ],
+      child: KhaltiScope(
+        publicKey: 'test_public_key_f0ef86cb580946bd8d2e6eea13d26639',
+        enabledDebugging: true,
+        builder: (context, navKey) => MaterialApp(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: Colors.black,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            useMaterial3: true,
+          ),
+          initialRoute: (token != null && JwtDecoder.isExpired(token) == false)
+              ? 'dashboard'
+              : 'login',
+          routes: {
+            'login': (context) => MyLogin(),
+            'register': (context) => MyRegister(),
+            'dashboard': (context) => Dashboard(
+                  token: token!,
+                  role: role!,
+                  names: names,
+                  phone: phone,
+                  id: id,
+                  email: email,
+                ),
+            'propertydetails': (context) => PropertyDetailPage(),
+          },
+          navigatorKey: navKey,
+          localizationsDelegates: const [
+            KhaltiLocalizations.delegate,
+          ],
+        ),
       ),
     );
   }

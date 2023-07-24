@@ -14,7 +14,7 @@ class Dashboardlist extends StatelessWidget {
       child: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        itemCount: posts.length,
+        itemCount: 3,
         itemBuilder: (context, index) => Container(
           height: 300,
           child: DashboardItem(
