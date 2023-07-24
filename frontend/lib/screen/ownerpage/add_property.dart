@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../Provider/propertyList.dart';
 // import 'booking.dart';
 // import 'dashboard.dart';
 
@@ -116,13 +119,13 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
       var jsonResponse = jsonDecode(response.body);
 
       if (jsonResponse['status']) {
-        // try {
-        //   await Provider.of<PropertyListProvider>(context, listen: false)
-        //       .refreshData();
-        // } catch (e) {
-        //   throw (e);
-        // }
-        // String names  = jsonResponse['names'];
+        try {
+          await Provider.of<PropertyListProvider>(context, listen: false)
+              .refreshData();
+        } catch (e) {
+          throw (e);
+        }
+        // String names = jsonResponse['names'];
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Property successfully added'),
@@ -163,13 +166,13 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
           Icon(
             iconData,
             size: 30.0,
-            color: isSelected ? Colors.blue : Colors.grey,
+            color: isSelected ? Color(0xFF764A9C) : Colors.grey,
           ),
           const SizedBox(height: 5.0),
           Text(
             type,
             style: TextStyle(
-              color: isSelected ? Colors.blue : Colors.grey,
+              color: isSelected ? Color(0xFF764A9C) : Colors.grey,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             ),
           ),
@@ -233,15 +236,17 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.grey,
+                          color: Color(0xFF764A9C).withOpacity(0.5),
                           width: 1.0,
                         ),
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(5.0),
                       ),
                       child: TextField(
                         controller: _propertyAddressController,
                         decoration: InputDecoration(
                           labelText: 'Property Address',
+                          labelStyle: TextStyle(color: Color(0xFF764A9C)),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(10.0),
                         ),
@@ -253,15 +258,21 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.grey,
+                          color: Color(0xFF764A9C)
+                              .withOpacity(0.5), // Purple border color
                           width: 1.0,
                         ),
                         borderRadius: BorderRadius.circular(5.0),
+                        color: Colors.white, // White background color
                       ),
                       child: TextField(
                         controller: _propertyLocalityController,
+                        style:
+                            TextStyle(color: Colors.black), // Black text color
                         decoration: InputDecoration(
                           labelText: 'Property Locality',
+                          labelStyle: TextStyle(
+                              color: Color(0xFF764A9C)), // Purple label color
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(10.0),
                         ),
@@ -281,8 +292,8 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
               const SizedBox(height: 20.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(6, (index) {
-                  int number = index + 1;
+                children: List.generate(5, (index) {
+                  int number = index + 0;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
@@ -295,7 +306,7 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: _selectedBalcony == number
-                              ? Colors.blue
+                              ? Color(0xFF764A9C)
                               : Colors.grey,
                           width: 2.0,
                         ),
@@ -310,7 +321,7 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                             color: _selectedBalcony == number
-                                ? Colors.blue
+                                ? Color(0xFF764A9C)
                                 : Colors.grey,
                           ),
                         ),
@@ -341,7 +352,7 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: _selectedBedroom == number
-                              ? Colors.blue
+                              ? Color(0xFF764A9C)
                               : Colors.grey,
                           width: 2.0,
                         ),
@@ -356,7 +367,7 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                             color: _selectedBedroom == number
-                                ? Colors.blue
+                                ? Color(0xFF764A9C)
                                 : Colors.grey,
                           ),
                         ),
@@ -374,7 +385,7 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.grey,
+                    color: Color(0xFF764A9C).withOpacity(0.5),
                     width: 1.0,
                   ),
                   borderRadius: BorderRadius.circular(5.0),
@@ -441,12 +452,14 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
                 ),
               ),
               const SizedBox(height: 20.0),
-              ElevatedButton(
-                style: ButtonStyle(
-                  elevation: MaterialStateProperty.all(12),
+              Center(
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(12),
+                  ),
+                  onPressed: _submitForm,
+                  child: Text('Submit'),
                 ),
-                onPressed: _submitForm,
-                child: Text('Submit'),
               ),
             ],
           ),

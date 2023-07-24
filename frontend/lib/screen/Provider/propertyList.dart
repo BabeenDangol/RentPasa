@@ -8,6 +8,7 @@ import 'dart:convert';
 import '../../utils/Property_utils.dart';
 
 class PropertyListProvider extends ChangeNotifier {
+  bool isLoading = false;
   List<PropertyList> _propertylist = [];
   List<PropertyList> get propertylist => _propertylist;
 
@@ -16,17 +17,21 @@ class PropertyListProvider extends ChangeNotifier {
   String get search => _search;
 
   PropertyListProvider() {
-    _initializeData();
+    refreshData();
   }
-  Future<void> _initializeData() async {
-    List<PropertyList> data = await DataUtil().getData();
-    updatePropertyModel(data);
-  }
+  Future<void> refreshData() async {
+    isLoading = true;
+    final data = await DataUtil().getData();
 
-  void updatePropertyModel(List<PropertyList> data) {
     _propertylist = data;
     notifyListeners();
+    isLoading = false;
+    // updatePropertyModel(data);
   }
+
+  // void updatePropertyModel(List<PropertyList> data) {
+  //   notifyListeners();
+  // }
 
   void updateSearch(String search) {
     _search = search;
