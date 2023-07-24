@@ -3,11 +3,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:loginuicolors/screen/Tenantpages/bookingpage.dart';
 import 'package:loginuicolors/utils/route_names.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
-import '../../models/post_data.dart';
+
 import '../Provider/propertyList.dart';
 import '../dashboard_list/booking_list.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:loginuicolors/utils/logger.dart';
 
 List<String> imageList = [
   'assets/exide-ad.jpg',
@@ -15,6 +16,7 @@ List<String> imageList = [
   'assets/nimb-ad.jpg',
   // Add more image paths here
 ];
+final log = logger;
 
 class TenantViewPage extends StatefulWidget {
   final Booking? booking;
@@ -28,7 +30,7 @@ class _TenantViewPageState extends State<TenantViewPage> {
   @override
   void initState() {
     super.initState();
-    print(widget.booking);
+    log.i(widget.booking);
   }
 
   @override
@@ -339,7 +341,8 @@ class SlideableList extends StatelessWidget {
                                     Icons.star,
                                     color: Colors.amber,
                                   ),
-                                  onRatingUpdate: (value) => print(value),
+                                  onRatingUpdate: (value) =>
+                                      (value) => log.i(value),
                                 )
                               ],
                             ),

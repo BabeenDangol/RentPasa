@@ -1,17 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:loginuicolors/screen/Provider/propertyList.dart';
 import 'package:loginuicolors/screen/Tenantpages/bookingpage.dart';
 import 'package:provider/provider.dart';
+import 'package:logger/logger.dart';
 
 // Your existing ListData widget code remains unchanged
+final logger = Logger();
 
 class MyProperty extends StatefulWidget {
-  final String names;
-
+  final String? token;
+  final String id;
   MyProperty({
     Key? key,
-    required this.names,
+    required this.token,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -19,11 +23,23 @@ class MyProperty extends StatefulWidget {
 }
 
 class _MyPropertyState extends State<MyProperty> {
+  final log = logger;
+  late String id;
+  late String email;
+  late String names;
+  late int phone;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<PropertyListProvider>(context, listen: false)
           .filteredPropertyList;
+      Map<String, dynamic> jwtDecodedToken =
+          JwtDecoder.decode('${widget.token}');
+      id = jwtDecodedToken['_id'];
+      email = jwtDecodedToken['email'];
+      names = jwtDecodedToken['names'];
+      phone = jwtDecodedToken['phone'];
     });
 
     super.initState();
@@ -32,8 +48,11 @@ class _MyPropertyState extends State<MyProperty> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    // log.d(widget.id);
+
     return Consumer<PropertyListProvider>(
       builder: (context, provider, child) => Scaffold(
+        appBar: AppBar(),
         body: Container(
           height:
               size.height - const CupertinoNavigationBar().preferredSize.height,
@@ -54,7 +73,6 @@ class _MyPropertyState extends State<MyProperty> {
                   ),
                   onChanged: (value) {
                     provider.updateSearch(value);
-                    print(value);
                   },
                 ),
               ),
@@ -64,6 +82,12 @@ class _MyPropertyState extends State<MyProperty> {
                     itemCount: provider.filteredPropertyList.length,
                     itemBuilder: (context, index) {
                       final property = provider.filteredPropertyList[index];
+                      log.i("OwnerId:${property.ownerId}");
+                      log.i("CurrentId:${widget.id}");
+                      bool isOwnnerId = property.ownerId == widget.id;
+                      if (!isOwnnerId) {
+                        return Container();
+                      }
                       return Column(
                         children: [
                           Card(
@@ -81,6 +105,7 @@ class _MyPropertyState extends State<MyProperty> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      Text("${property.ownerName}"),
                                       Text("${property.propertyRent}"),
                                       Text("${property.propertyDate}"),
                                       Text("${property.propertyLocality}"),

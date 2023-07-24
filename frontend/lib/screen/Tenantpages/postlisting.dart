@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:loginuicolors/screen/Provider/propertyList.dart';
 import 'package:loginuicolors/screen/Tenantpages/bookingpage.dart';
 import 'package:provider/provider.dart';
+import 'package:loginuicolors/utils/logger.dart';
 
 // Your existing ListData widget code remains unchanged
 
@@ -24,6 +25,8 @@ class PostListing extends StatefulWidget {
 }
 
 class _PostListingState extends State<PostListing> {
+  final log = logger;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -59,7 +62,7 @@ class _PostListingState extends State<PostListing> {
                   ),
                   onChanged: (value) {
                     provider.updateSearch(value);
-                    print(value);
+                    log.i(value);
                   },
                 ),
               ),
@@ -107,7 +110,10 @@ class _PostListingState extends State<PostListing> {
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       BookingPage(
-                                                    booking: property,
+                                                    booking: provider
+                                                        .propertylist[index],
+                                                    phone: widget.phone,
+                                                    names: widget.names,
                                                     id: widget.id,
                                                   ),
                                                 ),
@@ -130,6 +136,9 @@ class _PostListingState extends State<PostListing> {
                                                         BookingPage(
                                                       booking: provider
                                                           .propertylist[index],
+                                                      phone: widget.phone,
+                                                      names: widget.names,
+                                                      id: widget.id,
                                                     ),
                                                   ),
                                                 );

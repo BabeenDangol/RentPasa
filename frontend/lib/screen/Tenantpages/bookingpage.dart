@@ -5,6 +5,7 @@ import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:loginuicolors/screen/Tenantpages/postlisting.dart';
 import 'package:loginuicolors/screen/dashboard_list/property_list_model.dart';
 import '../../config.dart';
+import '../../utils/logger.dart';
 import '../dashboard_list/booking_list.dart';
 
 class BookingPage extends StatefulWidget {
@@ -22,6 +23,7 @@ class BookingPage extends StatefulWidget {
 }
 
 class _BookingPageState extends State<BookingPage> {
+  final log = logger;
   String referenceId = "";
 
   @override
@@ -65,7 +67,8 @@ class _BookingPageState extends State<BookingPage> {
                       )
                     ],
                   ),
-                  Text("Postd on ${widget.booking.propertyDate.toString()}")
+                  Text("Postd on ${widget.booking.propertyDate.toString()}"),
+                  Text("Postd by ${widget.booking.ownerName.toString()}"),
                 ],
               ),
             ),
@@ -216,6 +219,9 @@ class _BookingPageState extends State<BookingPage> {
   void bookProperty() async {
     final Map<String, dynamic> requestBody = {
       'userId': widget.id,
+      'userName': widget.names,
+      'phone': widget.phone,
+      'ownerId': widget.booking.ownerId,
       'propertyAddress': widget.booking.propertyAddress,
       'propertyLocality': widget.booking.propertyLocality,
       'propertyRent': widget.booking.propertyRent,
@@ -232,8 +238,8 @@ class _BookingPageState extends State<BookingPage> {
       body: jsonEncode(requestBody),
     );
 
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    log.i('Response status: ${response.statusCode}');
+    log.i('Response body: ${response.body}');
 
     if (response.statusCode == 201) {
       var jsonResponse = jsonDecode(response.body);
@@ -256,7 +262,7 @@ class _BookingPageState extends State<BookingPage> {
         );
       }
     } else {
-      print('Server responded with status code ${response.statusCode}');
+      log.i('Server responded with status code ${response.statusCode}');
     }
   }
 

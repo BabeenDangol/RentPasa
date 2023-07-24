@@ -7,8 +7,10 @@ import 'bookedProperty.dart';
 
 class OwnerViewPage extends StatefulWidget {
   final String names;
+  final String id;
   final String token;
-  const OwnerViewPage({Key? key, required this.names, required this.token})
+  const OwnerViewPage(
+      {Key? key, required this.names, required this.token, required this.id})
       : super(key: key);
   @override
   State<OwnerViewPage> createState() => _OwnerViewPageState();
@@ -81,7 +83,8 @@ class _OwnerViewPageState extends State<OwnerViewPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => MyProperty(
-                          names: widget.names,
+                          token: widget.token,
+                          id: widget.id,
                         ),
                       ),
                     ),
@@ -102,6 +105,7 @@ class _OwnerViewPageState extends State<OwnerViewPage> {
                       MaterialPageRoute(
                         builder: (context) => BookedProperty(
                           names: widget.names,
+                          id: widget.id,
                         ),
                       ),
                     ),

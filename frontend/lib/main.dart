@@ -10,6 +10,9 @@ import 'login.dart';
 import 'register.dart';
 import 'package:khalti/khalti.dart';
 
+import 'utils/logger.dart';
+
+final log = logger;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -19,7 +22,7 @@ void main() async {
   final userRole = jwtDecodedToken != null ? jwtDecodedToken['role'] : null;
   final names = jwtDecodedToken != null ? jwtDecodedToken['names'] : null;
 
-  print('JSON response: $jwtDecodedToken');
+  log.i('JSON response: $jwtDecodedToken');
   runApp(MyApp(
     token: userToken,
     role: userRole,

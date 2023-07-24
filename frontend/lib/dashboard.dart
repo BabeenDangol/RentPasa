@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
@@ -8,19 +10,16 @@ import 'package:loginuicolors/colors/app_theme.dart';
 
 import 'package:loginuicolors/screen/Tenantpages/profile.dart';
 import 'package:loginuicolors/screen/Tenantpages/postlisting.dart';
-import 'package:loginuicolors/screen/Tenantpages/search.dart';
+
 import 'package:loginuicolors/screen/Tenantpages/setting.dart';
 import 'package:loginuicolors/screen/Tenantpages/tenant_view.dart';
 
 import 'package:loginuicolors/screen/ownerpage/ownerwiew.dart';
-import 'package:loginuicolors/utils/route_names.dart';
 
 // import 'package:loginuicolors/utils/route_names.dart';
-
+import 'package:loginuicolors/utils/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'colors/colors.dart';
 import 'login.dart';
-import 'add_property_form.dart';
 
 class Dashboard extends StatefulWidget {
   final String token;
@@ -39,12 +38,13 @@ class Dashboard extends StatefulWidget {
     required this.email,
     Key? key,
   }) : super(key: key);
-
   @override
   _DashboardState createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
+  final log = logger;
+
   late String id;
   late String email;
   late String names;
@@ -59,7 +59,7 @@ class _DashboardState extends State<Dashboard> {
     email = jwtDecodedToken['email'];
     names = jwtDecodedToken['names'];
     phone = jwtDecodedToken['phone'];
-    print("Dashboard:${phone}");
+    log.i("Dashboard:${phone}");
     // phone = jwtDecodedToken['phone'];
   }
 
@@ -235,6 +235,7 @@ class _DashboardState extends State<Dashboard> {
         OwnerViewPage(
           token: widget.token,
           names: names,
+          id: id,
         )
       ];
     }

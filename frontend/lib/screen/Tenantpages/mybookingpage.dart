@@ -6,7 +6,7 @@ import 'package:loginuicolors/config.dart';
 import 'package:loginuicolors/screen/dashboard_list/booked_data.dart';
 import 'package:loginuicolors/screen/dashboard_list/property_list_model.dart';
 import '../dashboard_list/booking_list.dart';
-
+import 'package:loginuicolors/utils/logger.dart';
 import 'bookingpage.dart';
 
 class MyBooking extends StatefulWidget {
@@ -17,6 +17,8 @@ class MyBooking extends StatefulWidget {
 }
 
 class _MyBookingState extends State<MyBooking> {
+  final log = logger;
+
   List<Booked> bookings = [];
   bool isLoading = true;
   TextEditingController searchController = TextEditingController();
@@ -35,22 +37,22 @@ class _MyBookingState extends State<MyBooking> {
       final response = await http.get(Uri.parse(getbooks));
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
-        print(jsonData);
+        log.d(jsonData);
         if (jsonData['status'] == true && jsonData['getbooks'] is List) {
           setState(() {
             bookings = (jsonData['getbooks'] as List<dynamic>)
                 .map((item) => Booked.fromJson(item))
                 .toList();
           });
-          print("Booking Details${jsonData}");
+          log.i("Booking Details${jsonData}");
         } else {
-          print('Invalid response format or no booking data');
+          log.e('Invalid response format or no booking data');
         }
       } else {
-        print('Failed to fetch data: ${response.reasonPhrase}');
+        log.e('Failed to fetch data: ${response.reasonPhrase}');
       }
     } catch (error) {
-      print('Error: $error');
+      log.e('Error: $error');
     } finally {
       setState(() {
         isLoading = false;

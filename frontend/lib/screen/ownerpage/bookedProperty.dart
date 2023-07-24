@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:http/http.dart' as http;
 import 'package:loginuicolors/config.dart';
 import 'package:loginuicolors/screen/dashboard_list/booked_data.dart';
 import 'package:loginuicolors/screen/dashboard_list/property_list_model.dart';
-import '../dashboard_list/booking_list.dart';
+
+import '../../utils/logger.dart';
 
 class BookedProperty extends StatefulWidget {
   final String names;
-  const BookedProperty({Key? key, required this.names}) : super(key: key);
+  final String id;
+  const BookedProperty({Key? key, required this.names, required this.id})
+      : super(key: key);
 
   @override
   State<BookedProperty> createState() => _BookedPropertyState();
 }
 
 class _BookedPropertyState extends State<BookedProperty> {
+  final log = logger;
   List<Booked> bookings = [];
   bool isLoading = true;
   TextEditingController searchController = TextEditingController();
@@ -35,22 +39,22 @@ class _BookedPropertyState extends State<BookedProperty> {
       final response = await http.get(Uri.parse(getbooks));
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
-        print(jsonData);
+        log.i(jsonData);
         if (jsonData['status'] == true && jsonData['getbooks'] is List) {
           setState(() {
             bookings = (jsonData['getbooks'] as List<dynamic>)
                 .map((item) => Booked.fromJson(item))
                 .toList();
           });
-          print("Booking Details${jsonData}");
+          log.i("Booking Details${jsonData}");
         } else {
-          print('Invalid response format or no booking data');
+          log.i('Invalid response format or no booking data');
         }
       } else {
-        print('Failed to fetch data: ${response.reasonPhrase}');
+        log.i('Failed to fetch data: ${response.reasonPhrase}');
       }
     } catch (error) {
-      print('Error: $error');
+      log.i('Error: $error');
     } finally {
       setState(() {
         isLoading = false;
@@ -73,6 +77,7 @@ class _BookedPropertyState extends State<BookedProperty> {
 
   @override
   Widget build(BuildContext context) {
+    log.i(widget.id);
     return Scaffold(
       appBar: AppBar(),
       body: isLoading
@@ -115,6 +120,7 @@ class _BookedPropertyState extends State<BookedProperty> {
                     itemCount: bookings.length,
                     itemBuilder: (context, index) {
                       final booking = bookings[index];
+
                       final searchPattern = searchController.text.toLowerCase();
                       if (searchPattern.isNotEmpty &&
                           !booking.propertyAddress
@@ -125,6 +131,7 @@ class _BookedPropertyState extends State<BookedProperty> {
                               .contains(searchPattern)) {
                         return Container();
                       }
+
                       return CardList(
                         booking: booking,
                       );
@@ -187,9 +194,9 @@ class _CardListState extends State<CardList> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Price: Rs. ${widget.booking.userId}'),
+                    Text('Booked by: Rs. ${widget.booking.userName}'),
                     Text('Price: Rs. ${widget.booking.propertyRent}'),
-                    Text('Address: ${widget.booking.propertyLocality}'),
+                    Text('Address: ${widget.booking.propertyAddress}'),
                   ],
                 ),
               ),

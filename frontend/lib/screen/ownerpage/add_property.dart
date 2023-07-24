@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/logger.dart';
 import '../Provider/propertyList.dart';
 // import 'booking.dart';
 // import 'dashboard.dart';
@@ -29,6 +30,7 @@ const List<String> list = <String>[
 final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
 class _AddPropertyFormState extends State<AddPropertyForm> {
+  final log = logger;
   String dropdownValue = list.first;
   TextEditingController _propertyAddressController = TextEditingController();
   TextEditingController _propertyLocalityController = TextEditingController();
@@ -55,7 +57,7 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
     email = jwtDecodedToken['email'];
     names = jwtDecodedToken['names'];
     phone = jwtDecodedToken['phone'];
-    print("Add Property:${jwtDecodedToken}");
+    log.i("${id}");
     // phone = jwtDecodedToken['phone'];
   }
 
@@ -148,8 +150,8 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
       body: jsonEncode(requestBody),
     );
 
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    log.i('Response status: ${response.statusCode}');
+    log.i('Response body: ${response.body}');
 
     if (response.statusCode == 201) {
       var jsonResponse = jsonDecode(response.body);
@@ -185,7 +187,7 @@ class _AddPropertyFormState extends State<AddPropertyForm> {
         );
       }
     } else {
-      print('Server responded with status code ${response.statusCode}');
+      log.i('Server responded with status code ${response.statusCode}');
     }
   }
 

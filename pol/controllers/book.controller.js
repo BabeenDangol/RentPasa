@@ -6,6 +6,8 @@ const createBook = async (req, res, next) => {
     const {
       userId,
       userName,
+      phone,
+      ownerId,
       propertyAddress,
       propertyLocality,
       propertyRent,
@@ -19,6 +21,8 @@ const createBook = async (req, res, next) => {
     const booking = await BookService.createBook(
       userId,
       userName,
+      phone,
+      ownerId,
       propertyAddress,
       propertyLocality,
       propertyRent,

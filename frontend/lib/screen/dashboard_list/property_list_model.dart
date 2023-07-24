@@ -30,6 +30,7 @@ class PropertyList {
   String id;
   String propertyAddress;
   String? ownerName;
+  String? ownerId;
   String? propertyLocality;
   int propertyRent;
   String propertyType;
@@ -44,6 +45,7 @@ class PropertyList {
     required this.id,
     required this.propertyAddress,
     this.ownerName,
+    this.ownerId,
     this.propertyLocality,
     required this.propertyRent,
     required this.propertyType,
@@ -59,6 +61,7 @@ class PropertyList {
         id: json["_id"],
         propertyAddress: json["propertyAddress"],
         ownerName: json["ownerName"],
+        ownerId: json["ownerId"],
         propertyLocality: json["propertyLocality"],
         propertyRent: json["propertyRent"],
         propertyType: json["propertyType"],

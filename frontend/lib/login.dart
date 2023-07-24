@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'config.dart';
+import 'utils/logger.dart';
 
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLoginState extends State<MyLogin> {
+  final log = logger;
   bool isChecked = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -91,7 +93,7 @@ class _MyLoginState extends State<MyLogin> {
         body: jsonEncode(reqBody));
 
     var jsonResponse = jsonDecode(response.body);
-    print("JSON response: $jsonResponse");
+    log.i("JSON response: $jsonResponse");
     if (jsonResponse['status']) {
       var id = jsonResponse['id'];
       var email = jsonResponse['email'];
