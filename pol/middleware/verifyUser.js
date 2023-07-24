@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 const verifyUser = async (req, res, next) => {
-    const token = req.headers.authorization;
+    const token = req.headers.authorization || req.cookies['authorization'];
+    console.log(`cookie: ${req.cookies['authorization']}`);
 
     if(!token) {
         return res.status(403).json({ message: 'Authentication error. Please send valid token'});

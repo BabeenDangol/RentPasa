@@ -29,12 +29,14 @@ exports.login = async (req, res, next) => {
 
         let tokenData = { _id: user._id, email: user.email, names:user.names, phone:user.phone, role:user.role };
 
-        const token = await UserService.generateToken(tokenData, "secretKey", '1h');
+            const token = await UserService.generateToken(tokenData, "secretKey", '1h');
 
-        res.headers = {};
-        res.headers.authorization = token;
+            res.headers = {};
+            res.headers.authorization = token;
 
-        res.status(200).json({ status: true, token: token });
+            res.cookie('authorization', token, {httpOnly: true, secure: true});
+
+            res.status(200).json({ status: true, token: token });
 
     } catch (error) {
         next(error);

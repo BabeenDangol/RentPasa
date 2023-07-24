@@ -5,6 +5,7 @@ const bookRouter = require('./routers/book.router');
 const bookingsRouter = require('./routers/bookings.router');
 const propertyRouter = require('./routers/property.router');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const { url } = require('inspector');
 
 
@@ -17,6 +18,7 @@ app.use(
 );
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use('/user', userRouter);
 // app.use('/booking', bookingsRouter);
