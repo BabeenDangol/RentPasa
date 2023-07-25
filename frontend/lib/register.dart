@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-// import 'login.dart';
+import 'package:loginuicolors/screen/ownerpage/myproperty.dart';
+
 import 'config.dart';
+
+final log = logger;
 
 class MyRegister extends StatefulWidget {
   const MyRegister({Key? key}) : super(key: key);
@@ -43,12 +46,12 @@ class _MyRegisterState extends State<MyRegister> {
         body: jsonEncode(regBody),
       );
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      log.i('Response status: ${response.statusCode}');
+      log.i('Response body: ${response.body}');
 
       if (response.statusCode == 201) {
         var jsonResponse = jsonDecode(response.body);
-        print(jsonResponse);
+        log.i(jsonResponse);
         if (jsonResponse['status']) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -63,7 +66,7 @@ class _MyRegisterState extends State<MyRegister> {
           );
         }
       } else {
-        print('Server responded with status code ${response.statusCode}');
+        log.i('Server responded with status code ${response.statusCode}');
       }
     }
   }

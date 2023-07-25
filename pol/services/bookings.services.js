@@ -19,13 +19,13 @@ class BookingsService {
     }
   } 
   //get all the Bookings.
-   static async getBooks() {
-    try {
-      return await BookModel.find();
-    } catch (error) {
-      throw error;
-    }
-  }
+  //  static async getBooks() {
+  //   try {
+  //     return await BookModel.find();
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 
   // Get a specific booking by ID
   static async getBookingById(bookingId) {

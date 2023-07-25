@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:loginuicolors/screen/ownerpage/myproperty.dart';
 
 void main() {
   runApp(home());
 }
+
+final log = logger;
 
 class home extends StatelessWidget {
   @override
@@ -57,6 +62,7 @@ class _DropdownDatePickerExampleState extends State<DropdownDatePickerExample> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,7 +87,7 @@ class _DropdownDatePickerExampleState extends State<DropdownDatePickerExample> {
               items: <String>[
                 'Select State',
                 'Delhi',
-               'Mumbai',
+                'Mumbai',
               ].map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -132,12 +138,13 @@ class _DropdownDatePickerExampleState extends State<DropdownDatePickerExample> {
             child: ElevatedButton(
               onPressed: () {
                 // Perform submit action with the selected values and date
-                print('Selected values:');
-                print('Dropdown 1: $dropdownValue1');
+                log.i('Selected values:');
+                log.i('Dropdown 1: $dropdownValue1');
                 if (selectedDate != null) {
-                  print('Selected date: ${selectedDate!.toIso8601String().split('T')[0]}');
+                  log.i(
+                      'Selected date: ${selectedDate!.toIso8601String().split('T')[0]}');
                 }
-                print('Dropdown 3: $dropdownValue3');
+                log.i('Dropdown 3: $dropdownValue3');
               },
               child: Text('Submit'),
             ),

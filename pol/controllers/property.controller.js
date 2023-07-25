@@ -14,6 +14,7 @@ exports.createProperty = async (req, res, next) => {
       propertyBalconyCount,
       propertyBedroomCount,
       propertyDate,
+      propertyDescriptions,
       propertyImageBase64,
     } = req.body;
     console.log("CHECK MEEEE",req.body);
@@ -28,6 +29,7 @@ exports.createProperty = async (req, res, next) => {
       propertyBalconyCount,
       propertyBedroomCount,
       propertyDate,
+      propertyDescriptions,
       propertyImageBase64,
       // Remove "path" from the parameters as it's not used here.
     );
@@ -43,6 +45,14 @@ exports.getProperty = async (req, res, next) => {
   try {
     const property = await PropertyService.getProperty();
     res.status(200).json({ status: true, property });
+  } catch (error) {
+    next(error);
+  }
+};
+exports.getBooks = async (req, res, next) => {
+  try {
+    const getbooks = await PropertyService.getBooks();
+    res.status(200).json({ status: true, getbooks});
   } catch (error) {
     next(error);
   }

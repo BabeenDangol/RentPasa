@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:loginuicolors/screen/ownerpage/myproperty.dart';
 import 'dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'config.dart';
+
+final log = logger;
 
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
@@ -91,7 +94,7 @@ class _MyLoginState extends State<MyLogin> {
         body: jsonEncode(reqBody));
 
     var jsonResponse = jsonDecode(response.body);
-    print("JSON response: $jsonResponse");
+    log.i("JSON response: $jsonResponse");
     if (jsonResponse['status']) {
       var id = jsonResponse['id'];
       var email = jsonResponse['email'];

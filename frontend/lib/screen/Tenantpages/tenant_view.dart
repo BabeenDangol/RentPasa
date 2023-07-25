@@ -49,7 +49,7 @@ class _TenantViewPageState extends State<TenantViewPage> {
   @override
   void initState() {
     super.initState();
-    print(widget.booking);
+    // print(widget.booking);
   }
 
   @override
@@ -354,7 +354,7 @@ class SlideableList extends StatelessWidget {
                                       Icons.star,
                                       color: Colors.amber,
                                     ),
-                                    onRatingUpdate: (value) => print(value),
+                                    onRatingUpdate: (value) => (value),
                                   )
                                 ],
                               ),

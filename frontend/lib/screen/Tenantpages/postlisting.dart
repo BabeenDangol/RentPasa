@@ -44,7 +44,7 @@ class PostListing extends StatelessWidget {
                   ),
                   onChanged: (value) {
                     provider.updateSearch(value);
-                    print(value);
+                    // print(value);
                   },
                 ),
               ),
@@ -91,7 +91,7 @@ class PostListing extends StatelessWidget {
                                           color: Colors.amber,
                                         ),
                                         onRatingUpdate: (rating) {
-                                          print(rating);
+                                          // print(rating);
                                         },
                                       ),
                                       SizedBox(

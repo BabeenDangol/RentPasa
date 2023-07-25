@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:loginuicolors/screen/Tenantpages/mybookingpage.dart';
 import 'package:loginuicolors/screen/Tenantpages/profile.dart';
 import 'package:loginuicolors/screen/Tenantpages/postlisting.dart';
 import 'package:loginuicolors/screen/Tenantpages/setting.dart';
@@ -47,7 +48,7 @@ class _DashboardState extends State<Dashboard> {
     email = jwtDecodedToken['email'];
     names = jwtDecodedToken['names'];
     phone = jwtDecodedToken['phone'];
-    print("Dashboard:${phone}");
+    // print("Dashboard:${phone}");
     // phone = jwtDecodedToken['phone'];
   }
 
@@ -135,6 +136,7 @@ class _DashboardState extends State<Dashboard> {
           phone: phone,
           id: id,
         ),
+        MyBooking(names: names, id: id),
         // GetDataPage(
         //   email: email,
         //   names: names,
@@ -197,6 +199,10 @@ class _DashboardState extends State<Dashboard> {
               icon: Icon(Icons.room),
               label: "Post Listing ",
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.place),
+              label: "My Bookings",
+            ),
             // BottomNavigationBarItem(
             //   icon: Icon(Icons.add_outlined),
             //   label: "Post Listing",x
@@ -229,7 +235,11 @@ class _DashboardState extends State<Dashboard> {
     //Dashboard List
     List<Widget> _buildScreens() {
       return [
-        OwnerViewPage(),
+        OwnerViewPage(
+          token: widget.token,
+          id: id,
+          names: names,
+        ),
         OwnerSettings(
           email: email,
           names: names,

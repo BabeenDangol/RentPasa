@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:loginuicolors/propertydetails.dart';
 import 'package:loginuicolors/screen/Provider/propertyList.dart';
+import 'package:loginuicolors/screen/ownerpage/myproperty.dart';
 import 'package:provider/provider.dart';
 import '/dashboard.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -10,6 +11,7 @@ import 'login.dart';
 import 'register.dart';
 import 'package:khalti/khalti.dart';
 
+final log = logger;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -19,7 +21,7 @@ void main() async {
   final userRole = jwtDecodedToken != null ? jwtDecodedToken['role'] : null;
   final names = jwtDecodedToken != null ? jwtDecodedToken['names'] : null;
 
-  print('JSON response: $jwtDecodedToken');
+  log.i('JSON response: $jwtDecodedToken');
   runApp(MyApp(
     token: userToken,
     role: userRole,

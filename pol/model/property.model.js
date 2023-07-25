@@ -11,7 +11,11 @@ const propertySchema = new mongoose.Schema({
   propertyType: { type: String, required: true },
   propertyBalconyCount: { type: Number, required: true },
   propertyBedroomCount: { type: Number, required: true },
-  propertyDate: { type: Date}, // Changed to a single field for date and time
+  propertyDate: { type: Date},
+  propertyDescriptions: {
+    type: String,
+    // required: true,
+  }, // Changed to a single field for date and time
   propertyImage: {
     data: Buffer,
     contentType: String

@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:loginuicolors/screen/ownerpage/myproperty.dart';
 
-import '../../add_property_form.dart';
 import 'add_property.dart';
+import 'bookedProperty.dart';
 
 class OwnerViewPage extends StatefulWidget {
+  final String names;
+  final String id;
+  final String token;
+  const OwnerViewPage(
+      {Key? key, required this.names, required this.token, required this.id})
+      : super(key: key);
   @override
   State<OwnerViewPage> createState() => _OwnerViewPageState();
 }
@@ -18,8 +25,8 @@ class _OwnerViewPageState extends State<OwnerViewPage> {
       builder: (context) => FractionallySizedBox(
         heightFactor: 0.9,
         child: AddPropertyForm(
-            // onAddExpense: _addExpense,
-            ),
+          token: widget.token,
+        ),
       ), //must provide a function as a value.
     );
   }
@@ -27,40 +34,41 @@ class _OwnerViewPageState extends State<OwnerViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                "Dashboard",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  "Dashboard",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.all(15),
-              height: 500,
-              child: GridView.count(
-                crossAxisCount: 2,
-                children: [
-                  //Adding property Card
-                  GridCard(
-                    icons: Icon(Icons.add_a_photo_outlined),
-                    text: Text(
-                      "Add Property",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+              Container(
+                padding: EdgeInsets.all(15),
+                height: 500,
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  children: [
+                    //Adding property Card
+                    GridCard(
+                      icons: Icon(Icons.add_a_photo_outlined),
+                      text: Text(
+                        "Add Property",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      color: const Color.fromARGB(255, 242, 242, 242),
+                      onPressed: _openAddProperty,
                     ),
-                    color: const Color.fromARGB(255, 242, 242, 242),
-                    onPressed: _openAddProperty,
-                  ),
-                  GridCard(
+                    GridCard(
                       icons: Icon(Icons.add_a_photo_outlined),
                       text: Text(
                         "My Property",
@@ -70,8 +78,17 @@ class _OwnerViewPageState extends State<OwnerViewPage> {
                         ),
                       ),
                       color: const Color.fromARGB(255, 247, 247, 247),
-                      onPressed: () => navigateToPage(context, '/page2')),
-                  GridCard(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyProperty(
+                            token: widget.token,
+                            id: widget.id,
+                          ),
+                        ),
+                      ),
+                    ),
+                    GridCard(
                       icons: Icon(Icons.add_a_photo_outlined),
                       text: Text(
                         "Booked Property",
@@ -81,11 +98,21 @@ class _OwnerViewPageState extends State<OwnerViewPage> {
                         ),
                       ),
                       color: const Color.fromARGB(255, 255, 255, 255),
-                      onPressed: () => navigateToPage(context, '/page3')),
-                ],
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BookedProperty(
+                            names: widget.names,
+                            id: widget.id,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

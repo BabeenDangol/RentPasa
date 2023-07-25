@@ -72,7 +72,8 @@ class _BookingPageState extends State<BookingPage> {
                       )
                     ],
                   ),
-                  Text("Postd on ${widget.booking.propertyDate.toString()}")
+                  Text("Postd on ${widget.booking.propertyDate.toString()}"),
+                  Text("Postd by ${widget.booking.ownerId.toString()}")
                 ],
               ),
             ),
@@ -199,13 +200,18 @@ class _BookingPageState extends State<BookingPage> {
                               color: Colors.amber,
                             ),
                             onRatingUpdate: (rating) {
-                              print(rating);
+                              // print(rating);
                             },
                           ),
                         ],
                       )
                     ],
                   ),
+                  Text(
+                    "Property Description",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text("${widget.booking.propertyDescriptions}"),
                 ],
               ),
             ),
@@ -271,8 +277,8 @@ class _BookingPageState extends State<BookingPage> {
       body: jsonEncode(requestBody),
     );
 
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    // print('Response status: ${response.statusCode}');
+    // print('Response body: ${response.body}');
 
     if (response.statusCode == 201) {
       var jsonResponse = jsonDecode(response.body);
@@ -295,7 +301,7 @@ class _BookingPageState extends State<BookingPage> {
         );
       }
     } else {
-      print('Server responded with status code ${response.statusCode}');
+      // print('Server responded with status code ${response.statusCode}');
     }
   }
 

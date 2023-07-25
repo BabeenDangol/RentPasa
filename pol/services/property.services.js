@@ -1,8 +1,8 @@
 const PropertyModel = require('../model/property.model.js');
-
+const BookModel = require("../model/book.model.js");
 class PropertyService {
   // Create a new property
-  static async createProperty(propertyAddress,ownerName, ownerId, propertyLocality, propertyRent, propertyType, propertyBalconyCount, propertyBedroomCount, propertyDate, propertyImageBase64, propertyImagePath) {
+  static async createProperty(propertyAddress,ownerName, ownerId, propertyLocality, propertyRent, propertyType, propertyBalconyCount, propertyBedroomCount, propertyDate, propertyImageBase64,propertyDescriptions, propertyImage) {
     try {
       const property = new PropertyModel({
         propertyAddress,
@@ -14,6 +14,7 @@ class PropertyService {
         propertyBalconyCount,
         propertyBedroomCount,
         propertyDate,
+        propertyDescriptions,
         propertyImage:{
           data: propertyImageBase64,
           contentType: 'image/jpg',
@@ -34,7 +35,13 @@ class PropertyService {
       throw error;
     }
   }
-
+  static async getBooks() {
+    try {
+      return await BookModel.find();
+    } catch (error) {
+      throw error;
+    }
+  }
   // Update a property
   static async updateProperty(bookingId, propertyAddress, propertyLocality, propertyRent, propertyType, propertyBalconyCount, propertyBedroomCount, propertyDate, propertyImage) {
     try {
