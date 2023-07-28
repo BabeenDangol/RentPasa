@@ -6,7 +6,7 @@
 // final login = url + 'login';
 // final createProperty = url + 'createProperty';
 
-final url = 'http://192.168.95.146:3000/';
+final url = 'http://192.168.1.201:3000/';
 final registration = url + "user/registration";
 final login = url + 'user/login';
 final createProperty = url + 'property/properties';

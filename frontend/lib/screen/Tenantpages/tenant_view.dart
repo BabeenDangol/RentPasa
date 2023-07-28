@@ -19,7 +19,9 @@ List<String> imageList = [
 
 class TenantViewPage extends StatefulWidget {
   final Booking? booking;
-  const TenantViewPage({Key? key, this.booking}) : super(key: key);
+  final String token;
+  const TenantViewPage({Key? key, this.booking, required this.token})
+      : super(key: key);
 
   @override
   State<TenantViewPage> createState() => _TenantViewPageState();
@@ -274,7 +276,9 @@ class SlideableList extends StatelessWidget {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => BookingPage(booking: property),
+                        builder: (context) => BookingPage(
+                          booking: property,
+                        ),
                       ),
                     ),
                     child: Hero(

@@ -1,8 +1,8 @@
 class Booked {
-  final String propertyId;
   final String userId;
   final String userName;
   final int phone;
+  final String propertyId;
   final String ownerId;
   final String propertyAddress;
   final String propertyLocality;
@@ -15,11 +15,11 @@ class Booked {
   // Change from final to regular instance variable
 
   Booked({
-    required this.propertyId,
     required this.userId,
     required this.userName,
     required this.phone,
     required this.ownerId,
+    required this.propertyId,
     required this.propertyAddress,
     required this.propertyLocality,
     required this.propertyRent,

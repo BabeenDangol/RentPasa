@@ -111,7 +111,10 @@ class PostListing extends StatelessWidget {
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       BookingPage(
-                                                    booking: property,
+                                                    booking: provider
+                                                        .propertylist[index],
+                                                    phone: phone,
+                                                    names: names,
                                                     id: id,
                                                   ),
                                                 ),
@@ -134,6 +137,9 @@ class PostListing extends StatelessWidget {
                                                         BookingPage(
                                                       booking: provider
                                                           .propertylist[index],
+                                                      phone: phone,
+                                                      id: id,
+                                                      names: names,
                                                     ),
                                                   ),
                                                 );

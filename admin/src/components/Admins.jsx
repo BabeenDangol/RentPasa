@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 export default function Admins() {
     const [users, setUser] = useState([])
     const [data, setData] = useState([])
@@ -9,17 +10,41 @@ export default function Admins() {
     useEffect(() => {
         const getUser = async () => {
             setLoading(true);
-            fetch("http://localhost:3000/getuser").then((result) => {
-                result.json().then((resp) => {
-                    // console.warn(resp)
-                    if (resp.status && Array.isArray(resp.user)) {
-                        setData(resp.user);
-                        setUser(resp.user);
+            const token = localStorage.getItem('user-token');
+            console.log(token);
+            if (token) {
+                try {
+
+                    const response = await fetch('http://localhost:3000/user/getuser', {
+                        headers: {
+                            Authorization: `${token}`,
+                            Cookies: `${token}`
+                        }
+                    });
+
+
+                    const result = await response.json();
+
+                    if (response.ok && Array.isArray(result.user)) {
+                        setData(result.user);
+                        setUser(result.user);
                         setLoading(false); // Update the state with the correct users array
+                    } else {
+
+                        // Handle unsuccessful response or errors here
+                        console.error('Failed to fetch user data:', result);
                     }
-                })
-            })
-        }
+                } catch (error) {
+                    // Handle fetch errors here
+                    console.error('Fetch error:', error);
+                }
+            } else {
+                // Handle case when token is missing (e.g., user is not authenticated)
+                console.log('User is not authenticated');
+                setLoading(false);
+            }
+        };
+
         getUser();
     }, []);
     const Loading = () => {

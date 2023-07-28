@@ -127,7 +127,9 @@ class _DashboardState extends State<Dashboard> {
     //Dashboard List
     List<Widget> _buildScreens() {
       return [
-        TenantViewPage(),
+        TenantViewPage(
+          token: widget.token,
+        ),
         // MyBooking(),
         // ListData(),
         PostListing(
@@ -136,7 +138,7 @@ class _DashboardState extends State<Dashboard> {
           phone: phone,
           id: id,
         ),
-        MyBooking(names: names, id: id),
+        // MyBooking(names: names, id: id),
         // GetDataPage(
         //   email: email,
         //   names: names,
@@ -199,10 +201,10 @@ class _DashboardState extends State<Dashboard> {
               icon: Icon(Icons.room),
               label: "Post Listing ",
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.place),
-              label: "My Bookings",
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.place),
+            //   label: "My Bookings",
+            // ),
             // BottomNavigationBarItem(
             //   icon: Icon(Icons.add_outlined),
             //   label: "Post Listing",x

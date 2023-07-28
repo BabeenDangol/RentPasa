@@ -2,9 +2,9 @@ const BookModel = require('../model/book.model.js');
 
 class BookService {
   // Create a new book
-  static async createBook(userId,userName,phone,propertyAddress, propertyLocality, propertyRent, propertyType, propertyBalconyCount, propertyBedroomCount, propertyDate,propertyDescriptions) {
+  static async createBook(userId,userName,phone,ownerId,propertyAddress, propertyLocality, propertyRent, propertyType, propertyBalconyCount, propertyBedroomCount, propertyDate,propertyDescriptions) {
     try {
-      const book = new BookModel({userId, userName,phone,propertyAddress, propertyLocality, propertyRent, propertyType, propertyBalconyCount, propertyBedroomCount, propertyDate,propertyDescriptions });
+      const book = new BookModel({userId,userName,phone,propertyAddress, ownerId,propertyLocality, propertyRent, propertyType, propertyBalconyCount, propertyBedroomCount, propertyDate,propertyDescriptions });
       return await book.save();
     } catch (error) {
       throw error;

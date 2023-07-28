@@ -43,19 +43,19 @@ class PropertyService {
     }
   }
   // Update a property
-  static async updateProperty(bookingId, propertyAddress, propertyLocality, propertyRent, propertyType, propertyBalconyCount, propertyBedroomCount, propertyDate, propertyImage) {
+  static async updateProperty(propertyId, propertyAddress, propertyLocality, propertyRent, propertyType, propertyBalconyCount, propertyBedroomCount, propertyDate, propertyImage) {
     try {
       const updatedData = { propertyAddress, propertyLocality, propertyRent, propertyType, propertyBalconyCount, propertyBedroomCount, propertyDate, propertyImage };
-      return await PropertyModel.findByIdAndUpdate(bookingId, updatedData, { new: true });
+      return await PropertyModel.findByIdAndUpdate(propertyId, updatedData, { new: true });
     } catch (error) {
       throw error;
     }
   }
 
   // Delete a property by ID
-  static async deleteProperty(bookingId) {
+  static async deleteProperty(propertyId) {
     try {
-      return await PropertyModel.findByIdAndDelete(bookingId);
+      return await PropertyModel.findByIdAndDelete(propertyId);
     } catch (error) {
       throw error;
     }

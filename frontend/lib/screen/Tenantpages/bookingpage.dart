@@ -5,8 +5,9 @@ import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:loginuicolors/screen/Tenantpages/postlisting.dart';
 import 'package:loginuicolors/screen/dashboard_list/property_list_model.dart';
 import '../../config.dart';
-import '../dashboard_list/booking_list.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import '../../utils/loggers.dart';
+
+final log = logger;
 
 class BookingPage extends StatefulWidget {
   final PropertyList booking;
@@ -35,16 +36,10 @@ class _BookingPageState extends State<BookingPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Container(
-            //   height: 200,
-            //   width: double.infinity,
-            //   color: Colors.grey,
-            // ),
-            Image.asset(
-              'assets/room.jpg',
+            Container(
               height: 200,
               width: double.infinity,
-              fit: BoxFit.cover,
+              color: Colors.grey,
             ),
             SizedBox(
               height: 20,
@@ -73,7 +68,7 @@ class _BookingPageState extends State<BookingPage> {
                     ],
                   ),
                   Text("Postd on ${widget.booking.propertyDate.toString()}"),
-                  Text("Postd by ${widget.booking.ownerId.toString()}")
+                  Text("Postd by ${widget.booking.ownerName.toString()}"),
                 ],
               ),
             ),
@@ -158,15 +153,6 @@ class _BookingPageState extends State<BookingPage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "Rating",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
                         ],
                       ),
                       Column(
@@ -184,34 +170,10 @@ class _BookingPageState extends State<BookingPage> {
                             height: 20,
                           ),
                           Text("${widget.booking.id}"),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          RatingBar.builder(
-                            initialRating: 3,
-                            itemSize: 30,
-                            minRating: 1,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            onRatingUpdate: (rating) {
-                              // print(rating);
-                            },
-                          ),
                         ],
                       )
                     ],
                   ),
-                  Text(
-                    "Property Description",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Text("${widget.booking.propertyDescriptions}"),
                 ],
               ),
             ),
@@ -224,29 +186,25 @@ class _BookingPageState extends State<BookingPage> {
                 children: [
                   ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.white),
-                      elevation: MaterialStatePropertyAll(5),
+                      backgroundColor: MaterialStatePropertyAll(Colors.teal),
+                      elevation: MaterialStatePropertyAll(8),
                     ),
-                    onPressed: bookPropertyMethod,
+                    onPressed: bookProperty,
                     child: Text(
                       'Book Property',
-                      style: TextStyle(
-                        color: Color(0xFF6B4C85),
-                      ),
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
-                  SizedBox(width: 50),
+                  SizedBox(width: 60),
                   ElevatedButton(
                     style: ButtonStyle(
                       elevation: MaterialStatePropertyAll(8),
-                      backgroundColor: MaterialStatePropertyAll(Colors.white),
+                      backgroundColor: MaterialStatePropertyAll(Colors.teal),
                     ),
                     onPressed: payWithKhaltiInApp,
                     child: Text(
                       'Book in Advance',
-                      style: TextStyle(
-                        color: Color(0xFF6B4C85),
-                      ),
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ],
@@ -261,6 +219,9 @@ class _BookingPageState extends State<BookingPage> {
   void bookProperty() async {
     final Map<String, dynamic> requestBody = {
       'userId': widget.id,
+      'userName': widget.names,
+      'phone': widget.phone,
+      'ownerId': widget.booking.ownerId,
       'propertyAddress': widget.booking.propertyAddress,
       'propertyLocality': widget.booking.propertyLocality,
       'propertyRent': widget.booking.propertyRent,
@@ -277,8 +238,8 @@ class _BookingPageState extends State<BookingPage> {
       body: jsonEncode(requestBody),
     );
 
-    // print('Response status: ${response.statusCode}');
-    // print('Response body: ${response.body}');
+    log.i('Response status: ${response.statusCode}');
+    log.i('Response body: ${response.body}');
 
     if (response.statusCode == 201) {
       var jsonResponse = jsonDecode(response.body);
@@ -301,7 +262,7 @@ class _BookingPageState extends State<BookingPage> {
         );
       }
     } else {
-      // print('Server responded with status code ${response.statusCode}');
+      log.i('Server responded with status code ${response.statusCode}');
     }
   }
 
@@ -347,25 +308,5 @@ class _BookingPageState extends State<BookingPage> {
 
   void onCancel() {
     debugPrint("Cancelled");
-  }
-
-  bookPropertyMethod() {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Room Booked !"),
-            content: Text(
-                "Your room has been booked. We will contact your shortly."),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("OK"),
-              ),
-            ],
-          );
-        });
   }
 }

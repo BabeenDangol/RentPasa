@@ -13,7 +13,7 @@ const Sidebar = () => {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li className="nav-item active">
-                                <Link className="nav-link fw-bold" aria-current="page" to="/">Admins <span className="sr-only">(current)</span></Link>
+                                <Link className="nav-link fw-bold" aria-current="page" to="/Admin">Admins <span className="sr-only">(current)</span></Link>
                             </li>
                             <li className="nav-item ">
                                 <Link className="nav-link" aria-current="page" to="/property">property<span className="sr-only">(current)</span></Link>
@@ -21,15 +21,11 @@ const Sidebar = () => {
                       
                         </ul>
                         <div className="buttons">
-                            <Link to="" className="btn btn-outline-dark">
-                            <i className="fa fa-sign-in me-2"></i> Login
+
+                            <Link to="/" className="btn btn-outline-dark ms-2">
+                            <i className="fa fa-user-plus me-2 "></i> Login
                             </Link>
-                            <Link to="" className="btn btn-outline-dark ms-2">
-                            <i className="fa fa-user-plus me-2 "></i> Register
-                            </Link>
-                            <Link to="" className="btn btn-outline-dark ms-2">
-                            <i className="fa fa-shopping-cart me-2"></i>Cart(0)
-                            </Link>
+                           
                         </div>
                     </div>
                 </div>
